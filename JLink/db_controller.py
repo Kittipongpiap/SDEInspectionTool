@@ -56,7 +56,7 @@ def device_update(ui,mac_id,controller_type,first_stack,second_stack,note):
             print(sensor_db_value)
             device_db_table = "db_sde.devices_income"
             device_sensor = db_connect()
-            device_sensor.connect_sql_insert(device_db_table,sensor_db_value)
+            device_sensor.connect_insert(device_db_table,sensor_db_value)
             # QR Generator --------------------------------------------------
             if len(this_mac_array) == 0  and note.startswith('GOOD'):
                     qr_gen.qr_create_path(mac_id,box_lot_id)

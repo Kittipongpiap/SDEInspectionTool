@@ -5,6 +5,8 @@
 
 import subprocess
 
+mac_id = "" 
+
 def recover() :
     recover = "nrfjprog --recover --family NRF52  \n"
     try:
@@ -47,20 +49,24 @@ def protection() :
 def mac_id_check():
     # Define the nrfjprog command you want to run
     #recover()
-    command = "nrfjprog --memrd 0x10000060 --n 8 --family nrf52 "
-    mac_id = ""
+    command = "nrfjprog --memrd 0x10000060 --n 8 --family nrf52"
+    mac_id_local = ""
 
     # Run the command and capture the return code
     try:
         result = subprocess.run(
             command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         print(result)
-        mac_id = "F4CE36" + \
+        mac_id_local = "F4CE36" + \
             result.stdout.split(" ")[1][6:] + result.stdout.split(" ")[2]
-        print(mac_id)
+        print(mac_id_local)
+        mac_id=mac_id_local
     except Exception as e:
         print("Cant Read macID with jprog")
         print("An error occurred:", e)
+    return mac_id_local
+
+def get_mac_id():
     return mac_id
 
 
@@ -155,5 +161,7 @@ def flash_program(hex_name):
 
 
 if __name__ == "__main__":
-    # JLink_Power_On()
+    
     pass
+mac_id_check()
+print("JLink Module Test")

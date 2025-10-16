@@ -148,7 +148,7 @@ def program_combobox_click_event(ui):
 
 def add_good_device_event(ui):
     global mac_id_list
-    jlink.power_on()
+    # jlink.power_on()
     mac_id = jlink.mac_id_check()
     if not mac_id:
         ui.flashStatusLabel.setText(
