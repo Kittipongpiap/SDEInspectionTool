@@ -17,14 +17,16 @@ header = ['Device ID', 'Note','Data']
 
 def power_on_event(ui):
     ui.powerOnButton.setChecked(False) 
-    ui.powerOffButton.setChecked(True) 
+    ui.powerOffButton.setChecked(True)
     jlink.power_on()
+    print("Power On")
 
 
 def power_off_event(ui):
     ui.powerOnButton.setChecked(True) 
     ui.powerOffButton.setChecked(False)
     jlink.power_off()
+    print("Power Off")
 
 def flash_config(ui) :
     flash_event(ui)

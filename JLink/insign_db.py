@@ -12,25 +12,24 @@ def incoming_device(ui):
     lot_field = "lot_no"
     lot_invalid = []
     check_lot = db_connect()
-    check_lot.connect_select(lot_db_table,lot_condition,lot_field)
-    for lot_list in check_lot :
-         print(lot_list[0])
-         lot_invalid.append(lot_list[0])
-    null_space = 0
-    null_space = str(null_space)
-    # duplicated lot name 
-    if len(lot_no) >= 4  :
-        # ADD Data ===========================================================================================================
-        dt_string = get_date_time()
-        income_db = "('"+lot_no+"','"+null_space+"','"+null_space+"','"+null_space+"','"+null_space+"','"+dt_string+"')"
+    results = check_lot.connect_select(lot_db_table, lot_condition, lot_field)
+    for lot_list in results:
+        print(lot_list[0])
+        lot_invalid.append(lot_list[0])
+    null_space = '0'
+    # duplicated lot name
+    if len(lot_no) >= 4:
+        # ADD Data =======================================================================================================
+        # Use DB-friendly datetime (space between date and time)
+        dt_string = get_date_time_db()
+        # devices_income_lot expects 7 columns: lot_no, qty_product, qty_inspected,
+        # good_product, ng_product, status, create_at
+        income_db = "('" + lot_no + "','" + null_space + "','" + null_space + "','" + null_space + "','" + null_space + "','0','" + dt_string + "')"
         device_db_table = "db_sde.devices_income_lot"
         device_sensor = db_connect()
-        device_sensor.connect_sql_insert(device_db_table,income_db)
-        # SHOW STATUS ========================================================================================================
-        # ui.insign_status.setText(
-        #     "<span style=\"color:WHITE\">Status : </span></p>   <span style=\"color:#4CAF50\">Update Incoming Lot </span></p>")
-        # Clear Input ========================================================================================================
-        #ui.income_qt.clear()
+        device_sensor.connect_insert(device_db_table, income_db)
+        print(device_sensor)
+        # Clear Input ====================================================================================================
         ui.incom_date.clear()
     elif len(lot_no) == 0  :
         print("------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
@@ -38,7 +37,7 @@ def incoming_device(ui):
             "<span style=\"color:WHITE\">Status : </span></p><span style=\"color:RED\">Invalid Data</span></p>")
         #ui.income_qt.clear()
         ui.incom_date.clear()
-    elif lot_invalid != 0  :
+    elif len(lot_invalid) != 0  :
         print("------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         ui.insign_status.setText(
             "<span style=\"color:WHITE\">Status : </span></p><span style=\"color:RED\">Error Duplicated Lot No.</span></p>")
@@ -62,7 +61,7 @@ def incoming_list(ui,status) :
     # ------------------------------------------------------------------------------------------------
     issue_array = []
     db_con = db_connect()
-    db_con.connect_select(t_select,c_select,f_select)
+    results = db_con.connect_select(t_select, c_select, f_select)
     # ------------------------------------------------------------------------------------------------
     # total_array = []
     # total_db_con = db_connect()
@@ -72,7 +71,7 @@ def incoming_list(ui,status) :
 
     #columnHeaders = ["Lot No.","Test Round","Good","NG","Quantity"]
     columnHeaders = ["Lot No.","Quantity","Good","NG"]
-    for issue in db_con :
+    for issue in results:
         issue_array.append(issue)
     if status == 0 :
         TableData(ui.incomeTableView, columnHeaders, issue_array)
@@ -90,14 +89,15 @@ def lot_id_box(ui) :
     #ui.set_stage_boxlot_Box.clear()
     ui.boxlot_finder.addItem("Lot No.")
     db_con = db_connect()
-    db_con.connect_select(t_select,c_select,f_select)
-    for lot_id_list in db_con :
+    results = db_con.connect_select(t_select, c_select, f_select)
+    for lot_id_list in results:
         lot_id_array.append(lot_id_list)
     for lot_id_fill in lot_id_array :
         ui.boxlot_Box.addItem(lot_id_fill[0])
         ui.boxlot_finder.addItem(lot_id_fill[0])
         #ui.set_stage_boxlot_Box.addItem(lot_id_fill[0])
     pass
+    db_con.close()
 
 def finish_lot() :
     table_select = 'db_sde.devices_income_lot'
@@ -105,6 +105,7 @@ def finish_lot() :
     condition = "status = '0'"
     a_lot_con = db_connect()
     a_lot_con.connect_update(table_select,value,condition)
+    a_lot_con.close()
      
 #================================================================================================================================================================
 
@@ -189,8 +190,8 @@ def addDevice_action(ui,qty_status,device_type):
         condetion = "lot_no = '"+lot_reject+"'"
         qty_con = db_connect()
         qty_num = []
-        qty_con.connect_select(table_select,condetion,feild_select)
-        for qty in qty_con :
+        qty_results = qty_con.connect_select(table_select, condetion, feild_select)
+        for qty in qty_results:
             qty_num.append(qty)
             pass
         print(qty_num)   
@@ -209,8 +210,8 @@ def addDevice_action(ui,qty_status,device_type):
                     for round in rounds :
                         round = int(round)
                         db_con = db_connect()
-                        db_con.connect_select(str(t_select[round]),str(c_select[round]),str(f_select[round]))
-                        for data in db_con : 
+                        results = db_con.connect_select(str(t_select[round]), str(c_select[round]), str(f_select[round]))
+                        for data in results:
                             count_1 = int(data[0]) + 1
                             feild_data_reject = ""+str(f_select[round])+" = '"+str(count_1)+"'"
                             update_onlot_reject = db_connect()
@@ -226,11 +227,11 @@ def lot4export(ui) :
     feild_select = 'lot_no'
     a_lot_con = db_connect()
     ui.alive_lot_box.clear()
-    a_lot_con.connect_select(table_select,condetion,feild_select)
+    results = a_lot_con.connect_select(table_select, condetion, feild_select)
     lot_list = []
-    for lots in a_lot_con :
-            ui.alive_lot_box.addItem(lots[0])
-            lot_list.append(lots[0])
+    for lots in results:
+        ui.alive_lot_box.addItem(lots[0])
+        lot_list.append(lots[0])
     ui.lot_finder.clear()  
        
 def lot4display(ui) :

@@ -9,7 +9,7 @@ def recover() :
     recover = "nrfjprog --recover --family NRF52  \n"
     try:
     # Execute the command
-        subprocess.run(recover, check=True)
+        subprocess.run(recover, shell=True, check=True)
         print("Command executed successfully.")
     except subprocess.CalledProcessError as e:
         print("Error executing command:", e)
@@ -18,7 +18,7 @@ def reset() :
     reset = "nrfjprog --reset --family NRF52  \n"
     try:
     # Execute the command
-        subprocess.run(reset, check=True)
+        subprocess.run(reset, shell=True, check=True)
         print("Command executed successfully.")
     except subprocess.CalledProcessError as e:
         print("Error executing command:", e)
@@ -27,7 +27,7 @@ def eraseall() :
     eraseall = "nrfjprog -f NRF52 --eraseall \n"
     try:
     # Execute the command
-        subprocess.run(eraseall, check=True)
+        subprocess.run(eraseall, shell=True, check=True)
         print("Command executed successfully.")
     except subprocess.CalledProcessError as e:
         print("Error executing command:", e)
@@ -38,7 +38,7 @@ def protection() :
     protection = "nrfjprog -f NRF52 --rbp ALL  \n"
     try:
     # Execute the command
-        subprocess.run(protection, check=True)
+        subprocess.run(protection, shell=True, check=True)
         print("Command executed successfully.")
     except subprocess.CalledProcessError as e:
         print("Error executing command:", e)
@@ -65,40 +65,63 @@ def mac_id_check():
 
 
 def power_on():
-    jlink_process = subprocess.Popen("jlink", stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    """Attempt to power on using available J-Link executables.
 
-    # Send the "power on" command
-    command = "power on\n"  # Add '\n' to simulate pressing Enter
-    jlink_process.stdin.write(command)
-    jlink_process.stdin.flush()
-
-    # Read the response from J-Link (if needed)
-    output, error = jlink_process.communicate()
-
-    # Close the subprocess
-    jlink_process.stdin.close()
-    jlink_process.stdout.close()
-    jlink_process.stderr.close()
-    jlink_process.wait()
+    Tries common executables ('JLinkExe', 'JLink', 'jlink') and sends a small
+    commander script via stdin. Returns True on success, False otherwise.
+    """
+    executables = ["JLinkExe", "JLink", "jlink"]
+    command = "power on\nexit\n"
+    for exe in executables:
+        try:
+            proc = subprocess.run([exe], input=command, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=5)
+            print(f"{exe} returncode={proc.returncode}")
+            if proc.stdout:
+                print(proc.stdout)
+            if proc.stderr:
+                print(proc.stderr)
+            if proc.returncode == 0:
+                return True
+        except FileNotFoundError:
+            # executable not found, try next
+            continue
+        except subprocess.TimeoutExpired:
+            print(f"{exe} timed out while powering on")
+            continue
+        except Exception as e:
+            print(f"Error running {exe}: {e}")
+            continue
+    print("Failed to power on: no J-Link executable succeeded")
+    return False
 
 
 def power_off():
-    jlink_process = subprocess.Popen(
-        "jlink", stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    """Attempt to power off using available J-Link executables.
 
-    # Send the "power on" command
-    command = "power off\n"  # Add '\n' to simulate pressing Enter
-    jlink_process.stdin.write(command)
-    jlink_process.stdin.flush()
-
-    # Read the response from J-Link (if needed)
-    output, error = jlink_process.communicate()
-
-    # Close the subprocess
-    jlink_process.stdin.close()
-    jlink_process.stdout.close()
-    jlink_process.stderr.close()
-    jlink_process.wait()
+    Similar approach to power_on(); returns True on success.
+    """
+    executables = ["JLinkExe", "JLink", "jlink"]
+    command = "power off\nexit\n"
+    for exe in executables:
+        try:
+            proc = subprocess.run([exe], input=command, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=5)
+            print(f"{exe} returncode={proc.returncode}")
+            if proc.stdout:
+                print(proc.stdout)
+            if proc.stderr:
+                print(proc.stderr)
+            if proc.returncode == 0:
+                return True
+        except FileNotFoundError:
+            continue
+        except subprocess.TimeoutExpired:
+            print(f"{exe} timed out while powering off")
+            continue
+        except Exception as e:
+            print(f"Error running {exe}: {e}")
+            continue
+    print("Failed to power off: no J-Link executable succeeded")
+    return False
 
 
 def flash_program(hex_name):

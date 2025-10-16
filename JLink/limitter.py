@@ -20,13 +20,19 @@ def range_on_display(ui) :
         table = "db_sde.devices_income_range"
         condition = "value_type = '"+val_type[TyIndex]+"'"
         #field = "value_type,pm_2_5,scd_co2,scd_temp,scd_hum"
-        cel_fl_range.connect_select(table,condition,field[cel_fl_value])
-        for data in cel_fl_range :
+        results = cel_fl_range.connect_select(table, condition, field[cel_fl_value])
+        for data in results:
             cel_fl_done.append(data)
     print(cel_fl_done)
     columnHeaders = [[" HIGH LEVEL "," OFF "," LOW LEVEL "," MID LEVEL "],[" PM2.5(ug/m3) "," CO2(ppm) "," Temp(*C) "," Humid(%) "]]
-    cel_fl_dude = [(""+cel_fl_done[1][0]+"-"+cel_fl_done[0][0]+"",""+cel_fl_done[1][1]+"-"+cel_fl_done[0][1]+"",""+cel_fl_done[1][2]+"-"+cel_fl_done[0][2]+"",""+cel_fl_done[1][3]+"-"+cel_fl_done[0][3]+""),]
-    TableData(ui.sensorRangeView, columnHeaders[TyIndex], cel_fl_dude)
+    # Defensive: ensure we have at least two rows (min and max) with 4 columns each
+    if len(cel_fl_done) >= 2 and all(len(row) >= 4 for row in cel_fl_done[:2]):
+        cel_fl_dude = [(""+cel_fl_done[1][0]+"-"+cel_fl_done[0][0]+"",""+cel_fl_done[1][1]+"-"+cel_fl_done[0][1]+"",""+cel_fl_done[1][2]+"-"+cel_fl_done[0][2]+"",""+cel_fl_done[1][3]+"-"+cel_fl_done[0][3]+""),]
+        TableData(ui.sensorRangeView, columnHeaders[TyIndex], cel_fl_dude)
+    else:
+        # Not enough range data — display placeholders
+        cel_fl_dude = [("N/A","N/A","N/A","N/A")]
+        TableData(ui.sensorRangeView, columnHeaders[TyIndex], cel_fl_dude)
 
 
 def TableData(tableView, columnHeaders, data):
@@ -163,8 +169,8 @@ def Comparator(ui,mac_id,controller_type,first_stack,second_stack) :
         table = "db_sde.devices_income_range"
         condition = "value_type = '"+val_type_dif+"'"
         #field = "value_type,pm_2_5,scd_co2,scd_temp,scd_hum"
-        curr_range.connect_select(table,condition,field[get_value])
-        for data in curr_range :
+        results = curr_range.connect_select(table, condition, field[get_value])
+        for data in results:
             curr_done.append(data)
     min_data = curr_done[1]
     max_data = curr_done[0]

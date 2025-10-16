@@ -64,8 +64,8 @@ def onboard_show(ui):
     c_select = ""+in_between+" "+device_type[select_type]+" "+search_id+"  "+device_status_selected+"  "+chosen_lot+" "
     ui.controller_finder_status.setText(set_time_text)
     db_con = db_connect()
-    db_con.connect_select(t_select,c_select,f_select[select_type])
-    for data in db_con :
+    results = db_con.connect_select(t_select, c_select, f_select[select_type])
+    for data in results:
         data_test.append(data)
     TableData(ui.devicesDataView, data_Header[select_type], data_test)
     pass

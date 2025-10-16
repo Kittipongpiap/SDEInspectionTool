@@ -17,15 +17,15 @@ def device_update(ui,mac_id,controller_type,first_stack,second_stack,note):
     c_select = None
     port_array = []
     db_con = db_connect()
-    db_con.connect_select(t_select,c_select,f_select)
+    results = db_con.connect_select(t_select, c_select, f_select)
     #==============================================================
     fw_version = uif.production_fw_path(ui)
     #==============================================================
     this_mac_con = db_connect()
     condition = "device_id = '"+mac_id+"' AND lot_box_id = '"+box_lot_id+"' AND inspec_note = 'GOOD' "
-    this_mac_con.connect_select(t_select,condition,f_select)
+    this_mac_results = this_mac_con.connect_select(t_select, condition, f_select)
     this_mac_array = []
-    for this_mac in this_mac_con :
+    for this_mac in this_mac_results:
         this_mac_array.append(this_mac[0])
     if note.startswith('GOOD') :
         qty_status = 'good_product'
@@ -102,7 +102,7 @@ def device_update(ui,mac_id,controller_type,first_stack,second_stack,note):
                     qr_gen.qr_create_path(mac_id,box_lot_id)
     #===========================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
     # Store Device ID =====================
-    for port_data in db_con :
+    for port_data in results:
         #==================================
         port_array.append(port_data[0])
     #============================================================
@@ -125,13 +125,13 @@ def reject_device(ui,device_id,device_type,timestamp) :
     #print(lot_no)
     c_select = None
     db_con = db_connect()
-    db_con.connect_select(t_select,c_select,f_select)
+    results = db_con.connect_select(t_select, c_select, f_select)
     #=============================================================
     this_mac_con = db_connect()
     condition = "device_id = '"+device_id+"'"
-    this_mac_con.connect_select(t_select,condition,f_select)
+    this_mac_results = this_mac_con.connect_select(t_select, condition, f_select)
     this_mac_array = []
-    for this_mac in this_mac_con :
+    for this_mac in this_mac_results:
         print("====================================================")
         print(this_mac)
         this_mac_array.append(this_mac)
@@ -160,9 +160,9 @@ def error_inbetween(ui,issue):
     count_table = "db_sde.devices_income_lot"
     condition = " lot_no = '"+lot_no+"'"
     field = 'qty_inspected,ng_product'
-    count_lot.connect_select(count_table,condition,field)
-    for counts in count_lot :
-         print(counts)
+    count_results = count_lot.connect_select(count_table, condition, field)
+    for counts in count_results:
+        print(counts)
     count_result = counts
     print(count_result[0])
     error_id = lot_no +"_"+ str(count_result[0])
@@ -173,7 +173,7 @@ def error_inbetween(ui,issue):
     table = "db_sde.devices_income"
     value = "('"+error_id+"','NG','Failure','"+null+"','"+null+"','"+null+"','"+null+"','"+null+"','"+null+"','"+null+"','"+null+"','"+null+"','"+null+"','"+null+"','"+null+"','"+null+"','"+null+"','"+lot_no+"','"+null+"','"+issue+"','"+null+"','"+null+"','"+dt_string+"')"
     print(value)
-    reject_data.connect_sql_insert(table,value)
+    reject_data.connect_insert(table,value)
     #==============================================================
     value_up = ["qty_inspected","ng_product"]
     for update in range(2) :

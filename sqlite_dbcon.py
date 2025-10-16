@@ -1,151 +1,320 @@
-import sqlite3
 import mysql.connector
 from mysql.connector import Error
 
-class db_connect():
-    
+class db_connect:
     def __init__(self):
-        
-        # ES Test
-        #self.conn_db = mysql.connector.connect(host="172.16.0.228", database='db_sde',user="admin",password="1QAZ2wsx")
-        #ES Test
-        self.conn_db = mysql.connector.connect(host="192.168.3.116", database='db_sde',user="admin",password="Banana-Pi00")
-        # Office
-        #self.conn_db = mysql.connector.connect(host="172.16.0.227", database='db_sde',user="admin",password="Banana-Pi00")
-        # Office
-        #self.conn_db = mysql.connector.connect(host="DESKTOP-E43V24R", database='db_sde',user="admin",password="Banana-Pi00")
-
-
         try:
+            # Adjust for your environment (Mac / Office / Test)
+            self.conn_db = mysql.connector.connect(
+                host="localhost",
+                database="db_sde",
+                user="admin",
+                password="Banana-Pi00"
+            )
+
             if self.conn_db.is_connected():
-                pass
-                print("database connect")
-                # self.conn_db.cursor()
-            else :
-                print("No connect")
+                print("✅ Database connected successfully")
+            else:
+                print("❌ Database connection failed")
+
         except Error as e:
-            print("Error while connecting to MySQL", e)
-                    
-    def aslist(self):
-        
-        return self.query_result
-    
-    def __iter__(self):
-        return iter(self.aslist())
-    
-    def __str__(self):
-        return str(self.result)
-    
-    def connect_select(self,table = None, condition = None ,field = None):
-    
-        try:
-            cursor = self.conn_db.cursor()          
-            if condition != None : 
-               
-                sqlite_select = f"SELECT {field} FROM {table} WHERE {condition}"
-                #print("IF CONDITION")
-            
-            else :
-            
-                sqlite_select = f"SELECT {field} FROM {table}"
-                #print("ELSE CONDITION")
-            
-            cursor.execute(sqlite_select)
-            self.result = cursor.rowcount
-            
-            # if cursor.rowcount > 0 :
-            self.query_result = cursor.fetchall()
-                
-            self.conn_db.commit()
-            
-        except sqlite3.Error as error :
-            
-            assert "Error while connecting to sqlite", error
-            self.result = "error selete message: ",error
-            
-        finally :      
-                 
-            self.conn_db.close()         
-    
-    def connect_update(self,table = None ,values = None ,condition = None):
-       
-        try:     
-            cursor = self.conn_db.cursor()
-            sqlite_update = f"UPDATE {table} SET {values} WHERE {condition}" 
-            cursor.execute(sqlite_update)
-            self.conn_db.commit()
-            self.result = "update successfully",table
-            
-        except sqlite3.Error as error :           
-            assert "Error while connecting to sqlite", error
-            # self.result = "error update massage: ",error
-        finally :
-            
-            if self.conn_db:
-                    self.conn_db.close()
-            return cursor.rowcount     
+            print("❌ Error while connecting to MySQL:", e)
 
-    def connect_delete(self,table = None ,condition = None):
-
-        try:
-            
-            cursor = self.conn_db.cursor()
-            sqlite3_delect = f"DELETE FROM {table} WHERE {condition}"
-            cursor.execute(sqlite3_delect)
-            self.conn_db.commit()
-            self.result = "delete successfully",table
-            
-        except sqlite3.Error as error :
-            
-            assert "Error while connecting to sqlite", error
-            self.result = "error delete massage: ",error
-        
-        finally :
-            if self.conn_db:
-                    self.conn_db.close()
-        
-    def connect_sql_insert(self,table ,values):
-        
-        try:
-            
-            cursor = self.conn_db.cursor()                  
-            sqlite_insert_query = f"INSERT INTO {table} VALUES {values}"
-            cursor.execute(sqlite_insert_query)
-            self.conn_db.commit()
-            print("Record inserted successfully into  table ", cursor.rowcount)
-            cursor.close()
-           
-        except sqlite3.Error as error :
-            
-            assert "Error while connecting to sqlite", error
-            self.result = "error insert  massage: ",error
-           
-        finally:           
-            
-            if self.conn_db:
-                
-                    self.conn_db.close()
-                    print("The SQLite connection is closed")
-        
-            return cursor.rowcount
-    
-    def connect_select_join(self,command):
-    
-        try:               
-            cursor = self.conn_db.cursor()          
-            sqlite_select = command
-            cursor.execute(sqlite_select)
-            self.query_result = cursor.fetchall()
-            self.conn_db.commit()
-            
-        except sqlite3.Error as error :
-            print("Error while connecting to sqlite", error)
-            # assert "Error while connecting to sqlite", error
-            self.result = "error selete message: ",error
-            
-        finally :        
-            cursor.close()   
+    def __del__(self):
+        """Auto-close connection when object is destroyed."""
+        if hasattr(self, "conn_db") and self.conn_db.is_connected():
             self.conn_db.close()
-            
-        
-         
+            print("🔒 MySQL connection closed")
+
+    def connect_select(self, table, condition=None, field="*"):
+        cursor = None
+        # Ensure we have a live connection
+        if not hasattr(self, "conn_db") or not self.conn_db.is_connected():
+            print("❌ No active DB connection for SELECT query")
+            self.result = None
+            return []
+
+        try:
+            cursor = self.conn_db.cursor()
+            # Normalize field parameter
+            if isinstance(field, (list, tuple)):
+                field = ','.join(field)
+            if not isinstance(field, str):
+                field = str(field)
+            # remove accidental leading commas/spaces
+            field = field.lstrip(', ').strip()
+            if field == '':
+                field = '*'
+
+            query = f"SELECT {field} FROM {table}"
+            if condition:
+                query += f" WHERE {condition}"
+
+            # Debug: show the query being executed
+            # print(f"Executing query: {query}")
+
+            cursor.execute(query)
+            self.query_result = cursor.fetchall()
+            self.result = len(self.query_result)
+            return self.query_result
+
+        except Error as e:
+            # If table doesn't exist (Error 1146), try to auto-create known table and retry once
+            try:
+                if getattr(e, 'errno', None) == 1146:
+                    print("⚠️ Table not found. Attempting to create missing table and retry SELECT.")
+                    self._create_known_table_if_missing(table)
+                    # retry once
+                    cursor = self.conn_db.cursor()
+                    cursor.execute(query)
+                    self.query_result = cursor.fetchall()
+                    self.result = len(self.query_result)
+                    return self.query_result
+            except Exception:
+                pass
+
+            print("❌ Error in SELECT query:", e)
+            self.result = None
+            return []
+
+        finally:
+            if cursor:
+                cursor.close()
+
+    def connect_update(self, table, values, condition=None):
+        cursor = None
+        if not hasattr(self, "conn_db") or not self.conn_db.is_connected():
+            print("❌ No active DB connection for UPDATE query")
+            return 0
+
+        try:
+            cursor = self.conn_db.cursor()
+            query = f"UPDATE {table} SET {values}"
+            if condition:
+                query += f" WHERE {condition}"
+
+            cursor.execute(query)
+            self.conn_db.commit()
+            print(f"✅ Updated {cursor.rowcount} row(s)")
+            return cursor.rowcount
+
+        except Error as e:
+            # If table doesn't exist (1146), attempt to create known table then retry once
+            try:
+                if getattr(e, 'errno', None) == 1146:
+                    print("⚠️ Table not found. Attempting to create missing table and retry UPDATE.")
+                    self._create_known_table_if_missing(table)
+                    # retry once
+                    cursor = self.conn_db.cursor()
+                    cursor.execute(query)
+                    self.conn_db.commit()
+                    print(f"✅ Updated {cursor.rowcount} row(s)")
+                    return cursor.rowcount
+            except Exception:
+                pass
+
+            print("❌ Error in UPDATE query:", e)
+            return 0
+
+        finally:
+            if cursor:
+                cursor.close()
+
+    def connect_delete(self, table, condition):
+        cursor = None
+        if not hasattr(self, "conn_db") or not self.conn_db.is_connected():
+            print("❌ No active DB connection for DELETE query")
+            return 0
+
+        try:
+            cursor = self.conn_db.cursor()
+            query = f"DELETE FROM {table} WHERE {condition}"
+            cursor.execute(query)
+            self.conn_db.commit()
+            print(f"🗑️ Deleted {cursor.rowcount} row(s)")
+            return cursor.rowcount
+
+        except Error as e:
+            print("❌ Error in DELETE query:", e)
+            return 0
+
+        finally:
+            if cursor:
+                cursor.close()
+
+    def connect_insert(self, table, values):
+        cursor = None
+        if not hasattr(self, "conn_db") or not self.conn_db.is_connected():
+            print("❌ No active DB connection for INSERT query")
+            return 0
+
+        try:
+            cursor = self.conn_db.cursor()
+            query = f"INSERT INTO {table} VALUES {values}"
+            cursor.execute(query)
+            self.conn_db.commit()
+            print(f"✅ Inserted {cursor.rowcount} row(s)")
+            return cursor.rowcount
+
+        except Error as e:
+            print(f"cant insert {table} {values}")
+            print("❌ Error in INSERT query:", e)
+            return 0
+
+        finally:
+            if cursor:
+                cursor.close()
+
+    def connect_select_join(self, command):
+        cursor = None
+        if not hasattr(self, "conn_db") or not self.conn_db.is_connected():
+            print("❌ No active DB connection for JOIN SELECT query")
+            return []
+
+        try:
+            cursor = self.conn_db.cursor()
+            cursor.execute(command)
+            self.query_result = cursor.fetchall()
+            return self.query_result
+
+        except Error as e:
+            print("❌ Error in JOIN SELECT query:", e)
+            return []
+
+        finally:
+            if cursor:
+                cursor.close()
+    def _create_known_table_if_missing(self, full_table_name):
+        """Attempt to create known tables when a SELECT/UPDATE fails due to missing table.
+
+        full_table_name is expected to be 'db_sde.devices_income_lot' or similar.
+        """
+        try:
+            # Extract schema and table
+            if '.' in full_table_name:
+                schema, table = full_table_name.split('.', 1)
+            else:
+                schema = None
+                table = full_table_name
+
+            # Only handle the known table for now
+            if table == 'devices_income_lot':
+                create_sql = (
+                    "CREATE TABLE IF NOT EXISTS `devices_income_lot` ("
+                    "`lot_no` varchar(20) NOT NULL,"
+                    "`qty_product` int NOT NULL DEFAULT 0,"
+                    "`qty_inspected` int DEFAULT 0,"
+                    "`good_product` int DEFAULT 0,"
+                    "`ng_product` int DEFAULT 0,"
+                    "`status` char(1) DEFAULT '0',"
+                    "`create_at` datetime DEFAULT CURRENT_TIMESTAMP,"
+                    "PRIMARY KEY (`lot_no`)"
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+                )
+                cursor = self.conn_db.cursor()
+                # If a schema was provided, ensure the schema exists (best-effort)
+                if schema:
+                    try:
+                        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {schema}")
+                    except Exception:
+                        pass
+                cursor.execute(create_sql)
+                self.conn_db.commit()
+                cursor.close()
+                print("✅ Created table devices_income_lot (if it did not exist).")
+            elif table == 'devices_income_range':
+                create_sql = (
+                    "CREATE TABLE IF NOT EXISTS `devices_income_range` ("
+                    "`state_id` int NOT NULL AUTO_INCREMENT,"
+                    "`value_type` varchar(20) NOT NULL,"
+                    "`max_pm_2_5` varchar(4) NOT NULL,"
+                    "`max_scd_co2` varchar(4) NOT NULL,"
+                    "`max_scd_temp` varchar(4) NOT NULL,"
+                    "`max_scd_hum` varchar(4) NOT NULL,"
+                    "`min_pm_2_5` varchar(3) NOT NULL,"
+                    "`min_scd_co2` varchar(4) NOT NULL,"
+                    "`min_scd_temp` varchar(3) NOT NULL,"
+                    "`min_scd_hum` varchar(3) NOT NULL,"
+                    "`create_time` datetime DEFAULT CURRENT_TIMESTAMP,"
+                    "PRIMARY KEY (`state_id`)"
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+                )
+                cursor = self.conn_db.cursor()
+                if schema:
+                    try:
+                        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {schema}")
+                    except Exception:
+                        pass
+                cursor.execute(create_sql)
+                self.conn_db.commit()
+                # If table is empty, insert default seed rows (from repository SQL dump)
+                try:
+                    cursor.execute("SELECT COUNT(*) FROM devices_income_range")
+                    cnt = cursor.fetchone()[0]
+                except Exception:
+                    cnt = 0
+
+                if cnt == 0:
+                    try:
+                        seed_sql = (
+                            "INSERT INTO devices_income_range (state_id,value_type,max_pm_2_5,max_scd_co2,max_scd_temp,max_scd_hum,min_pm_2_5,min_scd_co2,min_scd_temp,min_scd_hum,create_time) VALUES "
+                            "(0,'Current_Value','1500','15','1500','1500','20','4','20','20',CURRENT_TIMESTAMP),"
+                            "(1,'Sensor_Value','20','2300','33','82','0','300','16','35',CURRENT_TIMESTAMP);"
+                        )
+                        cursor.execute(seed_sql)
+                        self.conn_db.commit()
+                        print("✅ Seeded devices_income_range with default rows.")
+                    except Exception as e:
+                        print("⚠️ Could not seed devices_income_range:", e)
+
+                cursor.close()
+                print("✅ Created table devices_income_range (if it did not exist).")
+            elif table == 'devices_income':
+                create_sql = (
+                    "CREATE TABLE IF NOT EXISTS `devices_income` ("
+                    "`device_id` varchar(20) NOT NULL,"
+                    "`inspec_note` varchar(10) NOT NULL,"
+                    "`devices_type` varchar(40) NOT NULL,"
+                    "`pm_1` varchar(3) DEFAULT NULL,"
+                    "`pm_2_5` varchar(3) DEFAULT NULL,"
+                    "`pm_10` varchar(3) DEFAULT NULL,"
+                    "`scd_co2` varchar(4) DEFAULT NULL,"
+                    "`scd_temp` varchar(2) DEFAULT NULL,"
+                    "`scd_hum` varchar(3) DEFAULT NULL,"
+                    "`sw_1st` varchar(4) DEFAULT NULL,"
+                    "`current_1st` varchar(10) DEFAULT NULL,"
+                    "`sw_2nd` varchar(4) DEFAULT NULL,"
+                    "`current_2nd` varchar(10) DEFAULT NULL,"
+                    "`sw_3rd` varchar(4) DEFAULT NULL,"
+                    "`current_3rd` varchar(10) DEFAULT NULL,"
+                    "`sw_4th` varchar(4) DEFAULT NULL,"
+                    "`current_4th` varchar(10) DEFAULT NULL,"
+                    "`lot_box_id` varchar(20) NOT NULL,"
+                    "`state_id` varchar(1) DEFAULT NULL,"
+                    "`issue_name` varchar(45) DEFAULT NULL,"
+                    "`print_stat` char(1) NOT NULL,"
+                    "`firmware_version` varchar(45) NOT NULL,"
+                    "`create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+                    "PRIMARY KEY (`device_id`)"
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+                )
+                cursor = self.conn_db.cursor()
+                if schema:
+                    try:
+                        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {schema}")
+                    except Exception:
+                        pass
+                cursor.execute(create_sql)
+                self.conn_db.commit()
+                cursor.close()
+                print("✅ Created table devices_income (if it did not exist).")
+            else:
+                print(f"⚠️ No auto-create rule for table: {full_table_name}")
+        except Exception as e:
+            print("❌ Failed to auto-create table:", e)
+    def close(self):
+        """Manually close the MySQL connection."""
+        if hasattr(self, "conn_db") and self.conn_db.is_connected():
+            self.conn_db.close()
+            print("🔒 Database connection closed manually")
+

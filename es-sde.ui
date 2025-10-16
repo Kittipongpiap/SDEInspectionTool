@@ -1798,7 +1798,6 @@ QComboBox QListView::item{
 
 QPushButton:hover {
     background-color: #d32f2f; /* Darker Green */
-box-shadow: 10px 10px 5px rgba(182, 191, 193, 0.5);
     border:1px solid #808080;
 }
 
@@ -1854,7 +1853,6 @@ QPushButton:pressed {
 
 QPushButton:hover {
     background-color: #065465; /* Darker Green */
-box-shadow: 10px 10px 5px rgba(182, 191, 193, 0.5);
     border:1px solid #808080;
 }
 
@@ -2170,7 +2168,6 @@ margin-right:0px</string>
 
 QPushButton:hover {
     background-color: #065465; /* Darker Green */
-box-shadow: 10px 10px 5px rgba(182, 191, 193, 0.5);
     border:1px solid #808080;
 }
 
@@ -3262,7 +3259,6 @@ QLineEdit:focus{
 
 QPushButton:hover {
     background-color: #065465; /* Darker Green */
-box-shadow: 10px 10px 5px rgba(182, 191, 193, 0.5);
     border:1px solid #808080;
 }
 
