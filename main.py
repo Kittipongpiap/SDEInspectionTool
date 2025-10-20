@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets
 from ui import Ui_MainWindow
 import sys
-import JLink.ui_maneger as page
+import JLink.ui_manager as page
 import JLink.limitter as sensor_range
 import JLink.insign_db as insign_db 
 

@@ -6,7 +6,7 @@ from PyQt5.QtGui import QStandardItemModel, QStandardItem, QBrush, QColor,QFont
 from utils import *
 import JLink.serialReader as srr
 import JLink.db_controller as db_controller
-import JLink.ui_maneger  as UIM
+import JLink.ui_manager  as UIM
 import JLink.db_controller as db_controller
 import JLink.limitter as pop_up
 

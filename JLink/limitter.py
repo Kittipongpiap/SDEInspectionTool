@@ -1,6 +1,6 @@
 from sqlite_dbcon import db_connect
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-import JLink.ui_funciton as uif
+import JLink.ui_function as uif
 import JLink.db_controller as db_mcu
 import JLink.insign_db as insgin_db
 from utils import *
@@ -27,7 +27,13 @@ def range_on_display(ui) :
     columnHeaders = [[" HIGH LEVEL "," OFF "," LOW LEVEL "," MID LEVEL "],[" PM2.5(ug/m3) "," CO2(ppm) "," Temp(*C) "," Humid(%) "]]
     # Defensive: ensure we have at least two rows (min and max) with 4 columns each
     if len(cel_fl_done) >= 2 and all(len(row) >= 4 for row in cel_fl_done[:2]):
-        cel_fl_dude = [(""+cel_fl_done[1][0]+"-"+cel_fl_done[0][0]+"",""+cel_fl_done[1][1]+"-"+cel_fl_done[0][1]+"",""+cel_fl_done[1][2]+"-"+cel_fl_done[0][2]+"",""+cel_fl_done[1][3]+"-"+cel_fl_done[0][3]+""),]
+        cel_fl_dude = [(
+        f"{cel_fl_done[1][0]}-{cel_fl_done[0][0]}",
+        f"{cel_fl_done[1][1]}-{cel_fl_done[0][1]}",
+        f"{cel_fl_done[1][2]}-{cel_fl_done[0][2]}",
+        f"{cel_fl_done[1][3]}-{cel_fl_done[0][3]}",
+        )]
+
         TableData(ui.sensorRangeView, columnHeaders[TyIndex], cel_fl_dude)
     else:
         # Not enough range data — display placeholders
@@ -170,6 +176,7 @@ def Comparator(ui,mac_id,controller_type,first_stack,second_stack) :
         condition = "value_type = '"+val_type_dif+"'"
         #field = "value_type,pm_2_5,scd_co2,scd_temp,scd_hum"
         results = curr_range.connect_select(table, condition, field[get_value])
+        print(results)
         for data in results:
             curr_done.append(data)
     min_data = curr_done[1]

@@ -1,4 +1,4 @@
-from JLink.ui_funciton import *
+from JLink.ui_function import *
 import serial.tools.list_ports
 import JLink.serialReader as srr
 import JLink.insign_db as insign_db 
@@ -148,4 +148,3 @@ def on_checkbox_state_changed(ui) :
         insign_db.incoming_list(ui,0)
         insign_db.lot4export(ui)
         ui.lot_finder.clear()
-
