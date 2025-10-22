@@ -11,7 +11,7 @@ import struct
 from utils import *
 import threading
 import JLink.jlink as jlink
-import JLink.ui_funciton as uif
+import JLink.ui_function as uif
 import JLink.db_controller as db_mcu
 import JLink.limitter as comperator
 import time
@@ -78,6 +78,7 @@ def ReadSerial_Controller(ui):
     print("Connecting to target via SWD...")
     jpylink.open()
     if not jpylink.connected():
+        jpylink.close()
         time.sleep(1)
         jpylink.open()
         if not jpylink.connected():
@@ -106,9 +107,6 @@ def ReadSerial_Controller(ui):
     try:
         while True:
             ser = jpylink.rtt_read(0, 1024)
-            if ser:
-                print("Status : Data Received")
-            
             s = _normalize_rtt_data(ser)
             if s:
                 lines = s.splitlines()
@@ -234,10 +232,34 @@ class SerialReader(QObject):
     error_occurred = pyqtSignal(str)
 
     def __init__(self, port, baud_rate):
+        DEVICE = 'nRF52840_xxAA'
         super().__init__()
-        self.port = port
-        self.baud_rate = baud_rate
-        self.reading = False
+        jpylink = pylink.JLink()
+    
+        jpylink.open()
+        if not jpylink.connected():
+            time.sleep(1)
+            jpylink.open()
+            if not jpylink.connected():
+                raise RuntimeError("Failed to connect to J-Link")
+        if(jpylink.tif != pylink.enums.JLinkInterfaces.SWD):  # 2 = SWD
+            jpylink.set_tif(pylink.enums.JLinkInterfaces.SWD)
+        jpylink.connect(DEVICE, speed=4000)  # 4 MHz SWD
+
+
+    # Start RTT
+        jpylink.rtt_start()
+        print("Waiting for RTT to start...")
+        for _ in range(100):  # ~10 seconds timeout
+            try:
+                num_up_bufs = jpylink.rtt_get_num_up_buffers()
+                if num_up_bufs > 0:
+                    break
+            except pylink.JLinkRTTException:
+                pass
+            time.sleep(0.1)
+        else:
+            raise RuntimeError("RTT not found! Make sure firmware enables SEGGER_RTT_Init()")
 
     def start_reading(self):
         self.reading = True
@@ -254,30 +276,48 @@ class SerialReader(QObject):
 
     def read_from_port(self):
         try:
-            ser = serial.Serial(self.port, self.baud_rate)
+            ser = jpylink.rtt_read(0, 1024)
+            s = _normalize_rtt_data(ser)
         except Exception as e:
             self.error_occurred.emit(f"Error opening serial port: {e}")
             return
         
         while self.reading:
             try:
-                if ser.in_waiting > 0:
-                    line = ser.readline().decode('utf-8', errors='ignore').strip()
-                    self.new_data.emit(line)
-                    time.sleep(0.005)  # Sleep for 5 milliseconds
+                self.new_data.emit(s)
+                time.sleep(0.005)  # Sleep for 50 milliseconds
             except Exception as e:
                 self.error_occurred.emit(f"Error reading from serial port: {e}")
                 break
 
-        ser.close()
+        jpylink.close()
 
 # Function to start reading
 def start_reading(ui):
     global serial_reader
     serial_port = ui.uart_portBox.currentText()
+    # Determine baud rate from UI if available, otherwise default to 115200
+    try:
+        if hasattr(ui, 'uart_baudBox'):
+            baud_rate = int(ui.uart_baudBox.currentText())
+        elif hasattr(ui, 'uart_baud'):
+            baud_rate = int(ui.uart_baud)
+        else:
+            baud_rate = 115200
+    except Exception:
+        baud_rate = 115200
+
     serial_reader = SerialReader(serial_port, baud_rate)
-    serial_reader.new_data.connect(lambda line: update_ui(ui, line))
-    serial_reader.error_occurred.connect(lambda error: ui.serial_monitor.append(error))
+    # Connect directly to the QTextEdit.append slot so PyQt will queue the
+    # calls into the GUI thread. Avoid lambdas which would run in the
+    # worker thread.
+    try:
+        serial_reader.new_data.connect(ui.serial_monitor.append)
+        serial_reader.error_occurred.connect(ui.serial_monitor.append)
+    except Exception:
+        # Fallback to previous behavior
+        serial_reader.new_data.connect(lambda line: update_ui(ui, line))
+        serial_reader.error_occurred.connect(lambda error: ui.serial_monitor.append(error))
     serial_reader.start_reading()
     ui.serial_monitor.clear()
     ui.serial_monitor.append("Started reading from the serial port.")

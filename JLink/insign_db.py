@@ -16,9 +16,11 @@ def incoming_device(ui):
     for lot_list in results:
         print(lot_list[0])
         lot_invalid.append(lot_list[0])
-    null_space = '0'
+    
     # duplicated lot name
-    if len(lot_no) >= 4:
+    if len(lot_no) >= 4 and len(lot_invalid) == 0  :
+        #new lot
+        null_space = '0'
         # ADD Data =======================================================================================================
         # Use DB-friendly datetime (space between date and time)
         dt_string = get_date_time_db()
@@ -46,6 +48,23 @@ def incoming_device(ui):
     incoming_list(ui,0)
 
 def incoming_list(ui,status) :
+    print("Incoming List Display")
+    # Determine search text: prefer the LineEdit `lot_finder` if it has text,
+    # otherwise fall back to the ComboBox `boxlot_finder` (used in some pages).
+    search_text = ''
+    try:
+        if hasattr(ui, 'lot_finder') and ui.lot_finder.text().strip():
+            search_text = ui.lot_finder.text().strip()
+            print('Using lot_finder LineEdit:', search_text)
+        elif hasattr(ui, 'boxlot_finder') and ui.boxlot_finder.currentText().strip() and ui.boxlot_finder.currentText() != 'Lot No.':
+            search_text = ui.boxlot_finder.currentText().strip()
+            print('Using boxlot_finder ComboBox:', search_text)
+        else:
+            print('No lot_finder text provided; using empty search')
+            search_text = ''
+    except Exception as e:
+        print('Error reading lot finder widgets:', e)
+        search_text = ''
     if status == 0 :
         ui.big_controller_btn.show()
         ui.big_insign_bt.hide()
@@ -186,48 +205,49 @@ def addDevice_action(ui,qty_status,device_type):
         action_case = ""
         lot_reject = ui.boxlot_Box.currentText()
         feild_select = 'qty_inspected'
+        field_select = 'qty_inspected'
         table_select = 'db_sde.devices_income_lot'
-        condetion = "lot_no = '"+lot_reject+"'"
+        condition = "lot_no = '"+lot_reject+"'"
         qty_con = db_connect()
         qty_num = []
-        qty_results = qty_con.connect_select(table_select, condetion, feild_select)
+        qty_results = qty_con.connect_select(table_select, condition, field_select)
         for qty in qty_results:
             qty_num.append(qty)
             pass
         print(qty_num)   
         if device_type :
-                    print("ADD BAD Device")
-                    if qty_status == 'ng_product' :
-                        f_select = ['qty_ng_product',qty_status,'qty_inspected']
-                        t_select = ["db_sde.devices_income_issue","db_sde.devices_income_lot","db_sde.devices_income_lot"]
-                        c_select = ["issue_name = '"+action_case+"' ","lot_no = '"+lot_reject+"'","lot_no = '"+lot_reject+"'"]
-                        rounds = ['0','1','2']
-                    else :
-                        f_select = [qty_status,'qty_inspected']
-                        t_select = ["db_sde.devices_income_lot","db_sde.devices_income_lot"]
-                        c_select = ["lot_no = '"+lot_reject+"'","lot_no = '"+lot_reject+"'"]
-                        rounds = ['0','1']
-                    for round in rounds :
-                        round = int(round)
-                        db_con = db_connect()
-                        results = db_con.connect_select(str(t_select[round]), str(c_select[round]), str(f_select[round]))
-                        for data in results:
-                            count_1 = int(data[0]) + 1
-                            feild_data_reject = ""+str(f_select[round])+" = '"+str(count_1)+"'"
-                            update_onlot_reject = db_connect()
-                            update_onlot_reject.connect_update(str(t_select[round]),str(feild_data_reject),str(c_select[round]))
+            print("ADD BAD Device")
+            if qty_status == 'ng_product' :
+                f_select = ['qty_ng_product',qty_status,'qty_inspected']
+                t_select = ["db_sde.devices_income_issue","db_sde.devices_income_lot","db_sde.devices_income_lot"]
+                c_select = ["issue_name = '"+action_case+"' ","lot_no = '"+lot_reject+"'","lot_no = '"+lot_reject+"'"]
+                rounds = ['0','1','2']
+            else :
+                f_select = [qty_status,'qty_inspected']
+                t_select = ["db_sde.devices_income_lot","db_sde.devices_income_lot"]
+                c_select = ["lot_no = '"+lot_reject+"'","lot_no = '"+lot_reject+"'"]
+                rounds = ['0','1']
+            for round in rounds :
+                round = int(round)
+                db_con = db_connect()
+                results = db_con.connect_select(str(t_select[round]), str(c_select[round]), str(f_select[round]))
+                for data in results:
+                    count_1 = int(data[0]) + 1
+                    feild_data_reject = ""+str(f_select[round])+" = '"+str(count_1)+"'"
+                    update_onlot_reject = db_connect()
+                    update_onlot_reject.connect_update(str(t_select[round]),str(feild_data_reject),str(c_select[round]))
         else :
-                    ui.flashStatusLabel.setText(
-                        "Status : <span style=\"color:RED\">Select Device Type for Reject</span></p>")
-                    pass 
+            ui.flashStatusLabel.setText(
+                "Status : <span style=\"color:RED\">Select Device Type for Reject</span></p>")
+            pass 
 #================================================================================================================================================================
 def lot4export(ui) :
     table_select = 'db_sde.devices_income_lot'
-    condetion = "status = '1' AND lot_no like '%"+ui.lot_finder.text()+"%'"
+    condition = "status = '1' AND lot_no like '%"+ui.lot_finder.text()+"%'"
     feild_select = 'lot_no'
     a_lot_con = db_connect()
     ui.alive_lot_box.clear()
-    results = a_lot_con.connect_select(table_select, condetion, feild_select)
+    results = a_lot_con.connect_select(table_select, condition, feild_select)
     lot_list = []
     for lots in results:
         ui.alive_lot_box.addItem(lots[0])

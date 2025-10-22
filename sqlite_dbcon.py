@@ -27,6 +27,8 @@ class db_connect:
             print("🔒 MySQL connection closed")
 
     def connect_select(self, table, condition=None, field="*"):
+        print("debug: select connect")
+        print("SELECT from", table)
         cursor = None
         # Ensure we have a live connection
         if not hasattr(self, "conn_db") or not self.conn_db.is_connected():
@@ -54,6 +56,7 @@ class db_connect:
             # print(f"Executing query: {query}")
 
             cursor.execute(query)
+            print(query)
             self.query_result = cursor.fetchall()
             self.result = len(self.query_result)
             return self.query_result
@@ -223,22 +226,6 @@ class db_connect:
                 cursor.close()
                 print("✅ Created table devices_income_lot (if it did not exist).")
             elif table == 'devices_income_range':
-                create_sql = (
-                    "CREATE TABLE IF NOT EXISTS `devices_income_range` ("
-                    "`state_id` int NOT NULL AUTO_INCREMENT,"
-                    "`value_type` varchar(20) NOT NULL,"
-                    "`max_pm_2_5` varchar(4) NOT NULL,"
-                    "`max_scd_co2` varchar(4) NOT NULL,"
-                    "`max_scd_temp` varchar(4) NOT NULL,"
-                    "`max_scd_hum` varchar(4) NOT NULL,"
-                    "`min_pm_2_5` varchar(3) NOT NULL,"
-                    "`min_scd_co2` varchar(4) NOT NULL,"
-                    "`min_scd_temp` varchar(3) NOT NULL,"
-                    "`min_scd_hum` varchar(3) NOT NULL,"
-                    "`create_time` datetime DEFAULT CURRENT_TIMESTAMP,"
-                    "PRIMARY KEY (`state_id`)"
-                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
-                )
                 cursor = self.conn_db.cursor()
                 if schema:
                     try:
@@ -269,47 +256,6 @@ class db_connect:
 
                 cursor.close()
                 print("✅ Created table devices_income_range (if it did not exist).")
-            elif table == 'devices_income':
-                create_sql = (
-                    "CREATE TABLE IF NOT EXISTS `devices_income` ("
-                    "`device_id` varchar(20) NOT NULL,"
-                    "`inspec_note` varchar(10) NOT NULL,"
-                    "`devices_type` varchar(40) NOT NULL,"
-                    "`pm_1` varchar(3) DEFAULT NULL,"
-                    "`pm_2_5` varchar(3) DEFAULT NULL,"
-                    "`pm_10` varchar(3) DEFAULT NULL,"
-                    "`scd_co2` varchar(4) DEFAULT NULL,"
-                    "`scd_temp` varchar(2) DEFAULT NULL,"
-                    "`scd_hum` varchar(3) DEFAULT NULL,"
-                    "`sw_1st` varchar(4) DEFAULT NULL,"
-                    "`current_1st` varchar(10) DEFAULT NULL,"
-                    "`sw_2nd` varchar(4) DEFAULT NULL,"
-                    "`current_2nd` varchar(10) DEFAULT NULL,"
-                    "`sw_3rd` varchar(4) DEFAULT NULL,"
-                    "`current_3rd` varchar(10) DEFAULT NULL,"
-                    "`sw_4th` varchar(4) DEFAULT NULL,"
-                    "`current_4th` varchar(10) DEFAULT NULL,"
-                    "`lot_box_id` varchar(20) NOT NULL,"
-                    "`state_id` varchar(1) DEFAULT NULL,"
-                    "`issue_name` varchar(45) DEFAULT NULL,"
-                    "`print_stat` char(1) NOT NULL,"
-                    "`firmware_version` varchar(45) NOT NULL,"
-                    "`create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,"
-                    "PRIMARY KEY (`device_id`)"
-                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
-                )
-                cursor = self.conn_db.cursor()
-                if schema:
-                    try:
-                        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {schema}")
-                    except Exception:
-                        pass
-                cursor.execute(create_sql)
-                self.conn_db.commit()
-                cursor.close()
-                print("✅ Created table devices_income (if it did not exist).")
-            else:
-                print(f"⚠️ No auto-create rule for table: {full_table_name}")
         except Exception as e:
             print("❌ Failed to auto-create table:", e)
     def close(self):
