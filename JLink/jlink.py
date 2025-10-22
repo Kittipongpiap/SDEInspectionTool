@@ -161,7 +161,6 @@ def flash_program(hex_name):
 
 
 if __name__ == "__main__":
-    
+    mac_id_check()
     pass
-mac_id_check()
-print("JLink Module Test")
+

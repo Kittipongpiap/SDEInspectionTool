@@ -235,9 +235,7 @@ def print_now_event(ui):
     global mac_id_list
     global mcu_data_list
     log.write_csv(['macID', 'note'], mac_id_list, "JLink/database/devices.csv")
-    print("taeeeeeeeeeeeeeeeeeeeEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEeeeeeeeeeee")
     print(mac_id_list)
-    print("taeeeeeeeeeeeeeeeeeeeEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEeeeeeeeeeee")
     for device in mac_id_list:
         log.update_print_label_by_mac_id(device[0])  # device 0 equal macId
     mac_id_list = []
@@ -249,7 +247,7 @@ def print_now_event(ui):
 
 def onboard_data_ui(ui,type,data1,data2,note) :
     global mcu_data_list
-    jlink.power_on()
+    # jlink.power_on()
     mac_id = jlink.mac_id_check()
     pm_all = []
     scd_all = []

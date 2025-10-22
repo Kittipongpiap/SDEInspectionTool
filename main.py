@@ -15,7 +15,7 @@ class MyMainWindow(QtWidgets.QMainWindow):
         self.ui = ui  # Store the ui reference
 
 if __name__ == "__main__":
-    insign_db.finish_lot()
+    # insign_db.finish_lot()
     app = QtWidgets.QApplication(sys.argv)
     ui = Ui_MainWindow()
     MainWindow = MyMainWindow(ui)

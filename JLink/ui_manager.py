@@ -58,7 +58,7 @@ def button_interface(ui):
     connect_buttons([ui.clearListButton], lambda: clear_list_event(ui))
     # Insign Page ========================================================================
     connect_buttons([ui.income_submit], lambda: insign_db.incoming_device(ui))
-    connect_buttons([ui.income_submit], lambda: insign_db.lot_id_box(ui))
+    # connect_buttons([ui.income_submit], lambda: insign_db.lot_id_box(ui))
     connect_pages([ui.income_submit], 0) 
 
     connect_pages([ui.big_export_btn], 3)
