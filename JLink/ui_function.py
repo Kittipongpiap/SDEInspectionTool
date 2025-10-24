@@ -166,7 +166,8 @@ def add_good_device_event(ui):
         db_controller.error_inbetween(ui,issue)
         return
     else:
-            srr.testing_event(ui)
+            # Pass the MAC ID we just read to avoid duplicate reads
+            srr.testing_event(ui, mac_id)
             message = "Inspection In Progress, PRESS S1"
             pop_up.alert_helper.show_alert_signal.emit(message)
             #mac_id_list.append([mac_id, 'GOOD',''])

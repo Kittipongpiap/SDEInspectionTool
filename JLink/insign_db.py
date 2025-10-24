@@ -45,32 +45,17 @@ def incoming_device(ui):
             "<span style=\"color:WHITE\">Status : </span></p><span style=\"color:RED\">Error Duplicated Lot No.</span></p>")
         #ui.income_qt.clear()
         ui.incom_date.clear()
+    ui.lot_finder.setText(lot_no)
     incoming_list(ui,0)
 
 def incoming_list(ui,status) :
-    print("Incoming List Display")
-    # Determine search text: prefer the LineEdit `lot_finder` if it has text,
-    # otherwise fall back to the ComboBox `boxlot_finder` (used in some pages).
-    search_text = ''
-    try:
-        if hasattr(ui, 'lot_finder') and ui.lot_finder.text().strip():
-            search_text = ui.lot_finder.text().strip()
-            print('Using lot_finder LineEdit:', search_text)
-        elif hasattr(ui, 'boxlot_finder') and ui.boxlot_finder.currentText().strip() and ui.boxlot_finder.currentText() != 'Lot No.':
-            search_text = ui.boxlot_finder.currentText().strip()
-            print('Using boxlot_finder ComboBox:', search_text)
-        else:
-            print('No lot_finder text provided; using empty search')
-            search_text = ''
-    except Exception as e:
-        print('Error reading lot finder widgets:', e)
-        search_text = ''
     if status == 0 :
         ui.big_controller_btn.show()
         ui.big_insign_bt.hide()
         ui.big_db_btn.show()
     f_select = "lot_no,qty_inspected,good_product,ng_product"
     t_select = "db_sde.devices_income_lot"
+    # Build WHERE clause using the resolved search_text
     c_select = "status = '"+str(status)+"' AND lot_no like '%"+ui.lot_finder.text()+"%'"
     #-------------------------------------------------------------------------------------------------
     # data_set = 'F4CE36'
@@ -90,6 +75,8 @@ def incoming_list(ui,status) :
 
     #columnHeaders = ["Lot No.","Test Round","Good","NG","Quantity"]
     columnHeaders = ["Lot No.","Quantity","Good","NG"]
+    print(columnHeaders)
+    print(results)
     for issue in results:
         issue_array.append(issue)
     if status == 0 :
@@ -97,11 +84,17 @@ def incoming_list(ui,status) :
         TableData(ui.incomeTableView_2, columnHeaders, issue_array)
     if status == 1 : 
         TableData(ui.incomeTableView_4, columnHeaders, issue_array)
+    # Keep the UI search input cleared after listing to avoid stale values
+    try:
+        if hasattr(ui, 'lot_finder'):
+            ui.lot_finder.clear()
+    except Exception:
+        pass
 
 def lot_id_box(ui) :
     f_select = "lot_no"
     t_select = "db_sde.devices_income_lot"
-    c_select = "status = '0'"
+    c_select = "status = '0' and lot_no like '%"+ui.incom_date.text()+"%'"
     lot_id_array = []
     ui.boxlot_Box.clear()
     ui.boxlot_finder.clear()
@@ -119,6 +112,7 @@ def lot_id_box(ui) :
     db_con.close()
 
 def finish_lot() :
+    print("set status = 1")
     table_select = 'db_sde.devices_income_lot'
     value  = "status = '1'"
     condition = "status = '0'"
@@ -204,7 +198,6 @@ def addDevice_action(ui,qty_status,device_type):
         print("=====================================================================================")
         action_case = ""
         lot_reject = ui.boxlot_Box.currentText()
-        feild_select = 'qty_inspected'
         field_select = 'qty_inspected'
         table_select = 'db_sde.devices_income_lot'
         condition = "lot_no = '"+lot_reject+"'"
@@ -242,6 +235,7 @@ def addDevice_action(ui,qty_status,device_type):
             pass 
 #================================================================================================================================================================
 def lot4export(ui) :
+    print("set status = 1 form lot4export")
     table_select = 'db_sde.devices_income_lot'
     condition = "status = '1' AND lot_no like '%"+ui.lot_finder.text()+"%'"
     feild_select = 'lot_no'

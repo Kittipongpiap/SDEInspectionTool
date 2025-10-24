@@ -16,14 +16,48 @@ import JLink.db_controller as db_mcu
 import JLink.limitter as comperator
 import time
 import pylink
-from PyQt5.QtCore import QObject, pyqtSignal, QThread
+from PyQt5.QtCore import QObject, pyqtSignal, QThread, QMetaObject, Qt
 from PyQt5.QtGui import QTextCursor
 
 # Define the serial port and baudrate
 jpylink = pylink.JLink()
 
-def testing_event(ui):
-    thr = threading.Thread(target=ReadSerial_Controller, args=[ui])
+# Main-thread helper for running Comparator and UI updates safely
+class MainThreadHelper(QObject):
+    process_complete = pyqtSignal(object, str, str, list, list)
+    
+    def __init__(self):
+        super().__init__()
+        # Use Qt.UniqueConnection to prevent duplicate connections if module reloads
+        self.process_complete.connect(self._handle_process_complete, Qt.UniqueConnection)
+    
+    def _handle_process_complete(self, ui, mac_id, controller_type, first_stack, second_stack):
+        """Runs in main thread via queued connection"""
+        print(f"[MainThreadHelper] Processing {controller_type} with mac_id {mac_id}")
+        comperator.Comparator(ui, mac_id, controller_type, first_stack, second_stack)
+        status = comperator.return_status()
+        if status.startswith("GOOD"):
+            uif.afterLife_event(ui)
+            ui.flashStatusLabel.setText(
+                "Status : <span style=\"color:ORANGE\">Production Process Inprogress</span></p>")
+        elif status.startswith("NG"):
+            jlink.protection()
+            jlink.recover()
+            ui.flashStatusLabel.setText(
+                "Status : <span style=\"color:green\">Process Complete </span></p>")
+
+# Create a global instance in the main thread (when module loads)
+_main_thread_helper = MainThreadHelper()
+
+def testing_event(ui, mac_id=None):
+    """
+    Start inspection with optional pre-read MAC ID to avoid duplicate reads.
+    
+    Args:
+        ui: UI object
+        mac_id: Optional MAC ID string (if already read by caller)
+    """
+    thr = threading.Thread(target=ReadSerial_Controller, args=[ui, mac_id])
     thr.start() 
     ui.flashStatusLabel.setText(
             "Status : <span style=\"color:orange\">Inspection In Progress, PRESS S1 </span></p>")
@@ -62,9 +96,14 @@ def _normalize_rtt_data(d):
             return ''
 
 # Read Serial Port =====================================
-def ReadSerial_Controller(ui):
-    # message = "Inspection In Progress, PRESS S1"
-    # comperator.alert_helper.show_alert_signal.emit(message)
+def ReadSerial_Controller(ui, mac_id=None):
+    """
+    Read RTT data and process inspection results.
+    
+    Args:
+        ui: UI object
+        mac_id: Optional MAC ID (if already read by caller, avoids duplicate read)
+    """
     # Actuator Variable ====================================
     act_stack = []
     curr_stack = []
@@ -74,6 +113,11 @@ def ReadSerial_Controller(ui):
     device_type = 'Incomming Controlller Board'
     DEVICE = 'nRF52840_xxAA'
     flag_model3=True
+    
+    # Get MAC ID - use provided one or read from device (with caching)
+    if not mac_id:
+        mac_id = jlink.mac_id_check()
+    print(f"[ReadSerial_Controller] Device MAC ID: {mac_id}")
 
     print("Connecting to target via SWD...")
     jpylink.open()
@@ -85,6 +129,7 @@ def ReadSerial_Controller(ui):
             raise RuntimeError("Failed to connect to J-Link")
     if(jpylink.tif != pylink.enums.JLinkInterfaces.SWD):  # 2 = SWD
         jpylink.set_tif(pylink.enums.JLinkInterfaces.SWD)
+    # jpylink.disconnect()
     jpylink.connect(DEVICE, speed=4000)  # 4 MHz SWD
     print("target reset")
     print(jpylink.reset(ms=100,halt=False))
@@ -104,8 +149,13 @@ def ReadSerial_Controller(ui):
         raise RuntimeError("RTT not found! Make sure firmware enables SEGGER_RTT_Init()")
 
     print("RTT connected! Reading logs...\n")
+    processing_complete = False
     try:
         while True:
+            if processing_complete:
+                print("[ReadSerial_Controller] Processing complete, stopping...")
+                break
+                
             ser = jpylink.rtt_read(0, 1024)
             s = _normalize_rtt_data(ser)
             if s:
@@ -118,6 +168,7 @@ def ReadSerial_Controller(ui):
                         device_type = 'Sensor Controller'
                         sensor_data = line.strip()
                         raw_data = sensor_data[46:]
+                        print("line sensor data:", line)
 
                         if flag_model3:
                             print(f"Raw Data PM {raw_data}")
@@ -135,7 +186,7 @@ def ReadSerial_Controller(ui):
                             #print("PM========================")
                             #print(pm_stack)
 
-                        if not flag_model3 :
+                        elif not flag_model3 :
                             print(f"Raw Data scd {raw_data}")
                             scd_array = raw_data.split(',')
                             #print(scd_array)
@@ -152,8 +203,8 @@ def ReadSerial_Controller(ui):
                             #print(scd_stack)
                             flag_model3 = True
                             print("End Sensor")
-                            end_process_(ui,device_type,pm_stack,scd_stack)
-                            
+                            end_process_(ui, mac_id, device_type, pm_stack, scd_stack)
+                            processing_complete = True
                             break
 
         # the received Actuator Data ================================================================================================
@@ -176,13 +227,14 @@ def ReadSerial_Controller(ui):
                             curr_stack.append(act_amp)
 
                 #====================================================
-                    end_process_act = len(curr_stack)
                 # Actuator Controller End Message ================================
-                    #if device_type.startswith('Actuator Controller 3CH') :
-                    if end_process_act == 5 :
-                        print("End Level")
-                        end_process_(ui,device_type,act_stack,curr_stack)
-                        break
+                # Check AFTER all line processing is done, not inside the elif block
+                end_process_act = len(curr_stack)
+                if end_process_act == 5 :
+                    print("End Level")
+                    end_process_(ui, mac_id, device_type, act_stack, curr_stack)
+                    processing_complete = True
+                    break
     except pylink.JLinkRTTException as e:
         print("Error opening or reading serial port:", e)
         if jpylink.connected():
@@ -203,26 +255,17 @@ def readline(data):
         else:
             time.sleep(0.01)
             
-def end_process_(ui,controller_type,first_stack,second_stack):
-        mac_id = jlink.get_mac_id()
-        print(controller_type)
-        for first in first_stack :
-            print(first)
-        for second in second_stack :
-            print(second)
-        #-------------------------------------------------------------------------------
-        comperator.Comparator(ui,mac_id,controller_type,first_stack,second_stack)
-        status = comperator.return_status()
-        #-------------------------------------------------------------------------------
-        if status.startswith("GOOD") :
-            uif.afterLife_event(ui)
-            ui.flashStatusLabel.setText(
-                    "Status : <span style=\"color:ORANGE\">Production Process Inprogress</span></p>")
-        elif status.startswith("NG") :
-            jlink.protection()
-            jlink.recover()
-            ui.flashStatusLabel.setText(
-                    "Status : <span style=\"color:green\">Process Complete </span></p>")
+def end_process_(ui, mac_id, controller_type, first_stack, second_stack):
+    print(f"[end_process_] Called for {controller_type} with MAC ID: {mac_id}")
+    print(controller_type)
+    for first in first_stack :
+        print(first)
+    for second in second_stack :
+        print(second)
+    #-------------------------------------------------------------------------------
+    # Emit signal to run Comparator and UI updates in main thread
+    print(f"[end_process_] Emitting process_complete signal")
+    _main_thread_helper.process_complete.emit(ui, mac_id, controller_type, first_stack, second_stack)
 #==================================================================================================================================================================================
 # Flag to control the reading process
 reading = False

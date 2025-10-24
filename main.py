@@ -3,7 +3,7 @@ from ui import Ui_MainWindow
 import sys
 import JLink.ui_manager as page
 import JLink.limitter as sensor_range
-import JLink.insign_db as insign_db 
+# import JLink.insign_db as insign_db 
 
 
 def ConnectUiWithEvent(ui):
