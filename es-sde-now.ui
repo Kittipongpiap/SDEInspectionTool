@@ -1,0 +1,3863 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1370</width>
+    <height>853</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1370</width>
+    <height>704</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">	font-family: SCG;
+	font-size:15pt;</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1">
+     <widget class="QStackedWidget" name="main_page">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>1000</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="tabletTracking">
+       <bool>false</bool>
+      </property>
+      <property name="acceptDrops">
+       <bool>false</bool>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <widget class="QWidget" name="controller_page">
+       <layout class="QGridLayout" name="gridLayout_7">
+        <item row="0" column="0" colspan="5">
+         <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <family>SCG</family>
+            <pointsize>15</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:white;
+background-color:#222222;
+border-radius: 10px;
+padding: 10px 10px;
+margin-right:0px</string>
+          </property>
+          <property name="text">
+           <string>Controller Board : Erasing &amp; Programming</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" colspan="3">
+         <widget class="QComboBox" name="programFileComboBox">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>SCG</family>
+            <pointsize>15</pointsize>
+           </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::PreventContextMenu</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QComboBox{	
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+	padding-left:5px;
+}
+QComboBox::drop-down{
+	border:0px
+}
+
+QComboBox::down-arrow {
+	image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);
+	width:15px;	
+    height:15px;
+	margin-right:15px;
+}
+QComboBox:on{
+	border:4px solid #c2dbfe;
+}
+
+QComboBox QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+QComboBox QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="maximumSize">
+           <size>
+            <width>210</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>SCG</family>
+            <pointsize>15</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+            <stylestrategy>PreferDefault</stylestrategy>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:black;
+text-align:center;</string>
+          </property>
+          <property name="text">
+           <string>Select Device Type : </string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="4" rowspan="2">
+         <widget class="QFrame" name="frame">
+          <property name="maximumSize">
+           <size>
+            <width>220</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color:#222222;
+border-radius: 10px;
+padding: 0px 0px;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QComboBox" name="uart_portBox">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>250</y>
+             <width>201</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QComboBox{	
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+	padding-left:5px;
+}
+QComboBox::drop-down{
+	border:0px
+}
+
+QComboBox::down-arrow {
+	/*image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);*/
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+QComboBox:on{
+	border:4px solid #c2dbfe;
+}
+
+QComboBox QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+QComboBox QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_12">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>200</y>
+             <width>91</width>
+             <height>52</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777210</width>
+             <height>16777210</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>15</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:white;</string>
+           </property>
+           <property name="text">
+            <string>Serial Port</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_13">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>70</y>
+             <width>71</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777210</width>
+             <height>16777210</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>15</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:white;</string>
+           </property>
+           <property name="text">
+            <string>Power</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_2">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>30</y>
+             <width>191</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>15</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+             <underline>false</underline>
+             <strikeout>false</strikeout>
+             <stylestrategy>PreferDefault</stylestrategy>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:white;
+	text-align:center;</string>
+           </property>
+           <property name="text">
+            <string>___________________________________</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="powerOnButton">
+           <property name="geometry">
+            <rect>
+             <x>100</x>
+             <y>70</y>
+             <width>91</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>15</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="contextMenuPolicy">
+            <enum>Qt::PreventContextMenu</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 2px;
+}
+
+QPushButton:hover {
+    background-color: #45a049; /* Darker Green */
+}
+
+QPushButton:pressed {
+    background-color: #357a38; /* Even Darker Green when pressed */
+}</string>
+           </property>
+           <property name="text">
+            <string>On</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <property name="autoRepeat">
+            <bool>false</bool>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="powerOffButton">
+           <property name="geometry">
+            <rect>
+             <x>100</x>
+             <y>70</y>
+             <width>91</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>15</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="contextMenuPolicy">
+            <enum>Qt::PreventContextMenu</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: #f44336; /* Red */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 2px;
+}
+
+QPushButton:hover {
+    background-color: #d32f2f; /* Darker Red */
+}
+
+QPushButton:pressed {
+    background-color: #b71c1c; /* Even Darker Red when pressed */
+}</string>
+           </property>
+           <property name="text">
+            <string>Off</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <property name="autoRepeat">
+            <bool>false</bool>
+           </property>
+           <property name="autoExclusive">
+            <bool>false</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_3">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>186</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>15</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+             <underline>false</underline>
+             <strikeout>false</strikeout>
+             <stylestrategy>PreferDefault</stylestrategy>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:white;
+	text-align:center;</string>
+           </property>
+           <property name="text">
+            <string>Device Configuration</string>
+           </property>
+          </widget>
+          <widget class="QComboBox" name="boxlot_Box">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>160</y>
+             <width>201</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QComboBox{	
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+	padding-left:5px;
+	font-size:12pt;
+}
+QComboBox::drop-down{
+	border:0px
+}
+
+QComboBox::down-arrow {
+	/*image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);*/
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+QComboBox:on{
+	border:4px solid #c2dbfe;
+}
+
+QComboBox QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+QComboBox QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_14">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>110</y>
+             <width>131</width>
+             <height>52</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777210</width>
+             <height>16777210</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>15</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:white;</string>
+           </property>
+           <property name="text">
+            <string>Lot Number</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="finish_test">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>460</y>
+             <width>201</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>15</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="contextMenuPolicy">
+            <enum>Qt::PreventContextMenu</enum>
+           </property>
+           <property name="whatsThis">
+            <string/>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: #f44336; /* Red */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 2px;
+}
+
+QPushButton:hover {
+    background-color: #d32f2f; /* Darker Red */
+}
+
+QPushButton:pressed {
+    background-color: #b71c1c; /* Even Darker Red when pressed */
+}</string>
+           </property>
+           <property name="text">
+            <string>FINISH THIS  LOT</string>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="autoRepeatInterval">
+            <number>101</number>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="clearListButton">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>370</y>
+             <width>181</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>15</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="contextMenuPolicy">
+            <enum>Qt::PreventContextMenu</enum>
+           </property>
+           <property name="whatsThis">
+            <string/>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: #0077dd; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 5px;
+}
+
+QPushButton:hover {
+    background-color: #1ac1dd; /* Darker Green */
+}
+
+QPushButton:pressed {
+    background-color: #2eb3ca; /* Even Darker Green when pressed */
+}</string>
+           </property>
+           <property name="text">
+            <string>CLEAR</string>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>35</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="autoRepeatInterval">
+            <number>101</number>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="flashButton">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>310</y>
+             <width>181</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>15</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="contextMenuPolicy">
+            <enum>Qt::PreventContextMenu</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 2px;
+}
+
+QPushButton:hover {
+    background-color: #45a049; /* Darker Green */
+}
+
+QPushButton:pressed {
+    background-color: #357a38; /* Even Darker Green when pressed */
+}</string>
+           </property>
+           <property name="text">
+            <string>TEST</string>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
+          </widget>
+          <zorder>label_14</zorder>
+          <zorder>powerOnButton</zorder>
+          <zorder>label_2</zorder>
+          <zorder>label_12</zorder>
+          <zorder>label_13</zorder>
+          <zorder>powerOffButton</zorder>
+          <zorder>label_3</zorder>
+          <zorder>uart_portBox</zorder>
+          <zorder>boxlot_Box</zorder>
+          <zorder>finish_test</zorder>
+          <zorder>clearListButton</zorder>
+          <zorder>flashButton</zorder>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="4">
+         <widget class="QFrame" name="frame_2">
+          <property name="styleSheet">
+           <string notr="true">background-color:#d9dadb;
+border-radius: 10px;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="3" column="0">
+            <widget class="QTableView" name="devicesTableView">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>SCG</family>
+               <pointsize>15</pointsize>
+              </font>
+             </property>
+             <property name="cursor" stdset="0">
+              <cursorShape>ArrowCursor</cursorShape>
+             </property>
+             <property name="contextMenuPolicy">
+              <enum>Qt::PreventContextMenu</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">	border:1px solid #1c305c;
+background-color:white;
+    border-radius: 0px;
+    padding: 0px 0px;</string>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QTableView" name="incomeTableView_2">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>SCG</family>
+               <pointsize>15</pointsize>
+              </font>
+             </property>
+             <property name="cursor" stdset="0">
+              <cursorShape>ArrowCursor</cursorShape>
+             </property>
+             <property name="contextMenuPolicy">
+              <enum>Qt::PreventContextMenu</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">	border:1px solid #1c305c;
+background-color:white;
+    border-radius: 0px;
+    padding: 0px 0px;</string>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QTableView" name="sensorRangeView">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>100</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>SCG</family>
+               <pointsize>15</pointsize>
+              </font>
+             </property>
+             <property name="cursor" stdset="0">
+              <cursorShape>ArrowCursor</cursorShape>
+             </property>
+             <property name="contextMenuPolicy">
+              <enum>Qt::PreventContextMenu</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">	border:1px solid #1c305c;
+background-color:white;
+    border-radius: 0px;
+    padding: 0px 0px;</string>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QLabel" name="flashStatusLabel">
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>ArrowCursor</cursorShape>
+               </property>
+               <property name="contextMenuPolicy">
+                <enum>Qt::PreventContextMenu</enum>
+               </property>
+               <property name="text">
+                <string>Status : None</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="flashStatusLabel_2">
+             <property name="font">
+              <font>
+               <family>SCG</family>
+               <pointsize>15</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="cursor">
+              <cursorShape>ArrowCursor</cursorShape>
+             </property>
+             <property name="contextMenuPolicy">
+              <enum>Qt::PreventContextMenu</enum>
+             </property>
+             <property name="text">
+              <string>Test Result</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="flashStatusLabel_3">
+             <property name="font">
+              <font>
+               <family>SCG</family>
+               <pointsize>15</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="cursor">
+              <cursorShape>ArrowCursor</cursorShape>
+             </property>
+             <property name="contextMenuPolicy">
+              <enum>Qt::PreventContextMenu</enum>
+             </property>
+             <property name="text">
+              <string>Lot Detail</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="controller_data">
+       <layout class="QGridLayout" name="gridLayout_10">
+        <item row="3" column="0" colspan="9">
+         <widget class="QFrame" name="frame_3">
+          <property name="styleSheet">
+           <string notr="true">background-color:#d9dadb;
+border-radius: 10px;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="controller_finder_status">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>ArrowCursor</cursorShape>
+               </property>
+               <property name="contextMenuPolicy">
+                <enum>Qt::PreventContextMenu</enum>
+               </property>
+               <property name="text">
+                <string>Status : None</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="0">
+            <widget class="QTableView" name="devicesDataView">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>SCG</family>
+               <pointsize>15</pointsize>
+              </font>
+             </property>
+             <property name="cursor" stdset="0">
+              <cursorShape>ArrowCursor</cursorShape>
+             </property>
+             <property name="contextMenuPolicy">
+              <enum>Qt::PreventContextMenu</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">	border:1px solid #1c305c;
+background-color:white;
+    border-radius: 0px;
+    padding: 0px 0px;</string>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="2" column="6">
+         <widget class="QComboBox" name="mcu_status">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QComboBox{	
+	padding-left:10px;	
+padding-right:10px;
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+}
+QComboBox::drop-down{
+	border:0px
+}
+
+QComboBox::down-arrow {
+	image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+QComboBox:on{
+	border:4px solid #c2dbfe;
+}
+
+QComboBox QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+QComboBox QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Status</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Good</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>NG</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="2" column="5">
+         <widget class="QComboBox" name="time_frame">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">#time_frame{	
+	padding-left:10px;	
+padding-right:10px;
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+}
+#time_frame::drop-down{
+	border:0px
+}
+
+#time_frame::down-arrow {
+	image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+#time_frame:on{
+	border:4px solid #c2dbfe;
+}
+
+#time_frame QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+#time_frame QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Time</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Hour</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Day</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Week</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Month</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Year</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="10">
+         <widget class="QLabel" name="label_4">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>SCG</family>
+            <pointsize>15</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:white;
+background-color:#222222;
+border-radius: 10px;
+padding: 10px 10px;
+margin-right:0px</string>
+          </property>
+          <property name="text">
+           <string>Controller Board Data</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="8">
+         <widget class="QPushButton" name="controller_finder">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>SCG</family>
+            <pointsize>15</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::PreventContextMenu</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+	background-color:#06768d;
+    color:white;
+	border: none;
+	border-radius: 5px;
+	padding: 5px 5px;
+}
+
+QPushButton:hover {
+    background-color: #065465; /* Darker Green */
+    border:1px solid #808080;
+}
+
+QPushButton:pressed {
+    background-color: #003747; /* Even Darker Green when pressed */
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../../../SCG/04_Code/Assembly/SDE-Inspection/sde.qrc">
+            <normaloff>:/icon/assets/search-9-64.ico</normaloff>:/icon/assets/search-9-64.ico</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>25</width>
+            <height>25</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="device_id_input">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit{
+	background-color:white;
+	border-radius: 5px;
+  border:1px solid black;
+  padding: 5px 5px;
+}
+QLineEdit:focus{
+	border:4px solid #c2dbfe;
+}
+</string>
+          </property>
+          <property name="maxLength">
+           <number>16</number>
+          </property>
+          <property name="placeholderText">
+           <string>Device ID</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="4">
+         <widget class="QComboBox" name="device_type">
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>SCG</family>
+            <pointsize>15</pointsize>
+           </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::PreventContextMenu</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">#device_type{
+	padding-left:10px;	
+padding-right:20px;
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+}
+#device_type::drop-down{
+	border:0px
+}
+
+#device_type::down-arrow {
+	image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+#device_type:on{
+	border:4px solid #c2dbfe;
+}
+
+#device_type QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+#device_type QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Device Type</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Actuator Controller</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Sensor Controller</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="2" column="7">
+         <widget class="QComboBox" name="boxlot_finder">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QComboBox{	
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+	padding-left:10px;
+}
+QComboBox::drop-down{
+	border:0px
+}
+
+QComboBox::down-arrow {
+	image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+QComboBox:on{
+	border:4px solid #c2dbfe;
+}
+
+QComboBox QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+QComboBox QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="inspection_config_page">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QFrame" name="frame_4">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color:#d9dadb;
+border-radius: 10px;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_11">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>SCG</family>
+               <pointsize>15</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color:white;
+background-color:#222222;
+border-radius: 10px;
+padding: 10px 10px;
+margin-right:0px</string>
+             </property>
+             <property name="text">
+              <string>Incoming Lot</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QTableView" name="incomeTableView">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>SCG</family>
+               <pointsize>15</pointsize>
+              </font>
+             </property>
+             <property name="cursor" stdset="0">
+              <cursorShape>ArrowCursor</cursorShape>
+             </property>
+             <property name="contextMenuPolicy">
+              <enum>Qt::PreventContextMenu</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">	border:1px solid #1c305c;
+background-color:white;
+    border-radius: 0px;
+    padding: 0px 0px;</string>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QFrame" name="frame_5">
+          <property name="maximumSize">
+           <size>
+            <width>400</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color:#222222;
+border-radius: 10px;
+padding: 0px 0px;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLabel" name="label_18">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>88</y>
+             <width>381</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>15</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+             <underline>false</underline>
+             <strikeout>false</strikeout>
+             <stylestrategy>PreferDefault</stylestrategy>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:white;
+	text-align:center;</string>
+           </property>
+           <property name="text">
+            <string>______________________________________________________________________</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_30">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>60</y>
+             <width>211</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>18</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:white;
+	text-align:center;
+	font-size:18pt;</string>
+           </property>
+           <property name="text">
+            <string>Incoming Devices</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="incom_date">
+           <property name="geometry">
+            <rect>
+             <x>112</x>
+             <y>120</y>
+             <width>211</width>
+             <height>40</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLineEdit{
+	background-color:white;
+	border-radius: 5px;
+  border:1px solid black;
+  padding: 5px 5px;
+}
+QLineEdit:focus{
+	border:4px solid #c2dbfe;
+}
+</string>
+           </property>
+           <property name="maxLength">
+            <number>13</number>
+           </property>
+           <property name="placeholderText">
+            <string>L-20XXXXXX-XX</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="income_submit">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>190</y>
+             <width>361</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>15</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="contextMenuPolicy">
+            <enum>Qt::PreventContextMenu</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 2px;
+}
+
+QPushButton:hover {
+    background-color: #45a049; /* Darker Green */
+}
+
+QPushButton:pressed {
+    background-color: #357a38; /* Even Darker Green when pressed */
+}</string>
+           </property>
+           <property name="text">
+            <string>Submit</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <property name="autoRepeat">
+            <bool>false</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_32">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>125</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>15</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:white;
+	text-align:center;
+	font-size:15pt;</string>
+           </property>
+           <property name="text">
+            <string>Lot No.</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="insign_status">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>20</y>
+             <width>361</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <family>SCG</family>
+             <pointsize>18</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:white;
+	text-align:center;
+	font-size:18pt;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="export_data">
+       <layout class="QGridLayout" name="gridLayout_16">
+        <item row="0" column="0" rowspan="2" colspan="2">
+         <widget class="QStackedWidget" name="main_page_2">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>1000</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="tabletTracking">
+           <bool>false</bool>
+          </property>
+          <property name="acceptDrops">
+           <bool>false</bool>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="currentIndex">
+           <number>2</number>
+          </property>
+          <widget class="QWidget" name="controller_page_2">
+           <layout class="QGridLayout" name="gridLayout_8">
+            <item row="0" column="0" colspan="5">
+             <widget class="QLabel" name="label_7">
+              <property name="font">
+               <font>
+                <family>SCG</family>
+                <pointsize>15</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white;
+background-color:#222222;
+border-radius: 10px;
+padding: 10px 10px;
+margin-right:0px</string>
+              </property>
+              <property name="text">
+               <string>Controller Board : Erasing &amp; Programming</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1" colspan="3">
+             <widget class="QComboBox" name="programFileComboBox_2">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>SCG</family>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="contextMenuPolicy">
+               <enum>Qt::PreventContextMenu</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QComboBox{	
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+	padding-left:5px;
+}
+QComboBox::drop-down{
+	border:0px
+}
+
+QComboBox::down-arrow {
+	image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+QComboBox:on{
+	border:4px solid #c2dbfe;
+}
+
+QComboBox QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+QComboBox QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_8">
+              <property name="maximumSize">
+               <size>
+                <width>210</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>SCG</family>
+                <pointsize>15</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+                <underline>false</underline>
+                <strikeout>false</strikeout>
+                <stylestrategy>PreferDefault</stylestrategy>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:black;
+text-align:center;</string>
+              </property>
+              <property name="text">
+               <string>Select Device Type : </string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="4" rowspan="2">
+             <widget class="QFrame" name="frame_6">
+              <property name="maximumSize">
+               <size>
+                <width>220</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color:#222222;
+border-radius: 10px;
+padding: 0px 0px;</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <widget class="QComboBox" name="uart_portBox_2">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>250</y>
+                 <width>201</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QComboBox{	
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+	padding-left:5px;
+}
+QComboBox::drop-down{
+	border:0px
+}
+
+QComboBox::down-arrow {
+	/*image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);*/
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+QComboBox:on{
+	border:4px solid #c2dbfe;
+}
+
+QComboBox QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+QComboBox QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_15">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>200</y>
+                 <width>91</width>
+                 <height>52</height>
+                </rect>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777210</width>
+                 <height>16777210</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:white;</string>
+               </property>
+               <property name="text">
+                <string>Serial Port</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_16">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>70</y>
+                 <width>71</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777210</width>
+                 <height>16777210</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:white;</string>
+               </property>
+               <property name="text">
+                <string>Power</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_9">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>30</y>
+                 <width>191</width>
+                 <height>20</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                 <underline>false</underline>
+                 <strikeout>false</strikeout>
+                 <stylestrategy>PreferDefault</stylestrategy>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:white;
+	text-align:center;</string>
+               </property>
+               <property name="text">
+                <string>___________________________________</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="powerOnButton_2">
+               <property name="geometry">
+                <rect>
+                 <x>100</x>
+                 <y>70</y>
+                 <width>91</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="contextMenuPolicy">
+                <enum>Qt::PreventContextMenu</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 2px;
+}
+
+QPushButton:hover {
+    background-color: #45a049; /* Darker Green */
+}
+
+QPushButton:pressed {
+    background-color: #357a38; /* Even Darker Green when pressed */
+}</string>
+               </property>
+               <property name="text">
+                <string>On</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+               <property name="autoRepeat">
+                <bool>false</bool>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="powerOffButton_2">
+               <property name="geometry">
+                <rect>
+                 <x>100</x>
+                 <y>70</y>
+                 <width>91</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="contextMenuPolicy">
+                <enum>Qt::PreventContextMenu</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #f44336; /* Red */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 2px;
+}
+
+QPushButton:hover {
+    background-color: #d32f2f; /* Darker Red */
+}
+
+QPushButton:pressed {
+    background-color: #b71c1c; /* Even Darker Red when pressed */
+}</string>
+               </property>
+               <property name="text">
+                <string>Off</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+               <property name="autoRepeat">
+                <bool>false</bool>
+               </property>
+               <property name="autoExclusive">
+                <bool>false</bool>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_10">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>10</y>
+                 <width>186</width>
+                 <height>32</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                 <underline>false</underline>
+                 <strikeout>false</strikeout>
+                 <stylestrategy>PreferDefault</stylestrategy>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:white;
+	text-align:center;</string>
+               </property>
+               <property name="text">
+                <string>Device Configuration</string>
+               </property>
+              </widget>
+              <widget class="QComboBox" name="boxlot_Box_2">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>160</y>
+                 <width>201</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QComboBox{	
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+	padding-left:5px;
+	font-size:12pt;
+}
+QComboBox::drop-down{
+	border:0px
+}
+
+QComboBox::down-arrow {
+	/*image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);*/
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+QComboBox:on{
+	border:4px solid #c2dbfe;
+}
+
+QComboBox QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+QComboBox QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_17">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>110</y>
+                 <width>131</width>
+                 <height>52</height>
+                </rect>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777210</width>
+                 <height>16777210</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:white;</string>
+               </property>
+               <property name="text">
+                <string>Lot Number</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="finish_test_2">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>510</y>
+                 <width>181</width>
+                 <height>41</height>
+                </rect>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="contextMenuPolicy">
+                <enum>Qt::PreventContextMenu</enum>
+               </property>
+               <property name="whatsThis">
+                <string/>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #f44336; /* Red */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 2px;
+}
+
+QPushButton:hover {
+    background-color: #d32f2f; /* Darker Red */
+}
+
+QPushButton:pressed {
+    background-color: #b71c1c; /* Even Darker Red when pressed */
+}</string>
+               </property>
+               <property name="text">
+                <string>FINISH</string>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="autoRepeatInterval">
+                <number>101</number>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="clearListButton_2">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>370</y>
+                 <width>181</width>
+                 <height>41</height>
+                </rect>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="contextMenuPolicy">
+                <enum>Qt::PreventContextMenu</enum>
+               </property>
+               <property name="whatsThis">
+                <string/>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #02d2f5; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 5px;
+}
+
+QPushButton:hover {
+    background-color: #1ac1dd; /* Darker Green */
+}
+
+QPushButton:pressed {
+    background-color: #2eb3ca; /* Even Darker Green when pressed */
+}</string>
+               </property>
+               <property name="text">
+                <string>CLEAR</string>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="autoRepeatInterval">
+                <number>101</number>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="flashButton_2">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>310</y>
+                 <width>181</width>
+                 <height>41</height>
+                </rect>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="contextMenuPolicy">
+                <enum>Qt::PreventContextMenu</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 2px;
+}
+
+QPushButton:hover {
+    background-color: #45a049; /* Darker Green */
+}
+
+QPushButton:pressed {
+    background-color: #357a38; /* Even Darker Green when pressed */
+}</string>
+               </property>
+               <property name="text">
+                <string>TEST</string>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>22</width>
+                 <height>22</height>
+                </size>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item row="2" column="0" colspan="4">
+             <widget class="QFrame" name="frame_7">
+              <property name="styleSheet">
+               <string notr="true">background-color:#d9dadb;
+border-radius: 10px;</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_12">
+               <item row="3" column="0">
+                <widget class="QTableView" name="devicesTableView_2">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>SCG</family>
+                   <pointsize>15</pointsize>
+                  </font>
+                 </property>
+                 <property name="cursor" stdset="0">
+                  <cursorShape>ArrowCursor</cursorShape>
+                 </property>
+                 <property name="contextMenuPolicy">
+                  <enum>Qt::PreventContextMenu</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">	border:1px solid #1c305c;
+background-color:white;
+    border-radius: 0px;
+    padding: 0px 0px;</string>
+                 </property>
+                 <property name="alternatingRowColors">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="0">
+                <widget class="QTableView" name="incomeTableView_3">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>SCG</family>
+                   <pointsize>15</pointsize>
+                  </font>
+                 </property>
+                 <property name="cursor" stdset="0">
+                  <cursorShape>ArrowCursor</cursorShape>
+                 </property>
+                 <property name="contextMenuPolicy">
+                  <enum>Qt::PreventContextMenu</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">	border:1px solid #1c305c;
+background-color:white;
+    border-radius: 0px;
+    padding: 0px 0px;</string>
+                 </property>
+                 <property name="alternatingRowColors">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QTableView" name="sensorRangeView_2">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>SCG</family>
+                   <pointsize>15</pointsize>
+                  </font>
+                 </property>
+                 <property name="cursor" stdset="0">
+                  <cursorShape>ArrowCursor</cursorShape>
+                 </property>
+                 <property name="contextMenuPolicy">
+                  <enum>Qt::PreventContextMenu</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">	border:1px solid #1c305c;
+background-color:white;
+    border-radius: 0px;
+    padding: 0px 0px;</string>
+                 </property>
+                 <property name="alternatingRowColors">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <item>
+                  <widget class="QLabel" name="flashStatusLabel_4">
+                   <property name="font">
+                    <font>
+                     <family>SCG</family>
+                     <pointsize>15</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="cursor">
+                    <cursorShape>ArrowCursor</cursorShape>
+                   </property>
+                   <property name="contextMenuPolicy">
+                    <enum>Qt::PreventContextMenu</enum>
+                   </property>
+                   <property name="text">
+                    <string>Status : None</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="flashStatusLabel_5">
+                 <property name="font">
+                  <font>
+                   <family>SCG</family>
+                   <pointsize>15</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>ArrowCursor</cursorShape>
+                 </property>
+                 <property name="contextMenuPolicy">
+                  <enum>Qt::PreventContextMenu</enum>
+                 </property>
+                 <property name="text">
+                  <string>Test Result</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="flashStatusLabel_6">
+                 <property name="font">
+                  <font>
+                   <family>SCG</family>
+                   <pointsize>15</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>ArrowCursor</cursorShape>
+                 </property>
+                 <property name="contextMenuPolicy">
+                  <enum>Qt::PreventContextMenu</enum>
+                 </property>
+                 <property name="text">
+                  <string>Lot Detail</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="controller_data_2">
+           <layout class="QGridLayout" name="gridLayout_13">
+            <item row="3" column="0" colspan="9">
+             <widget class="QFrame" name="frame_8">
+              <property name="styleSheet">
+               <string notr="true">background-color:#d9dadb;
+border-radius: 10px;</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_14">
+               <item row="0" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <item>
+                  <widget class="QLabel" name="controller_finder_status_2">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>SCG</family>
+                     <pointsize>15</pointsize>
+                     <weight>50</weight>
+                     <bold>false</bold>
+                    </font>
+                   </property>
+                   <property name="cursor">
+                    <cursorShape>ArrowCursor</cursorShape>
+                   </property>
+                   <property name="contextMenuPolicy">
+                    <enum>Qt::PreventContextMenu</enum>
+                   </property>
+                   <property name="text">
+                    <string>Status : None</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="1" column="0">
+                <widget class="QTableView" name="devicesDataView_2">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>SCG</family>
+                   <pointsize>15</pointsize>
+                  </font>
+                 </property>
+                 <property name="cursor" stdset="0">
+                  <cursorShape>ArrowCursor</cursorShape>
+                 </property>
+                 <property name="contextMenuPolicy">
+                  <enum>Qt::PreventContextMenu</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">	border:1px solid #1c305c;
+background-color:white;
+    border-radius: 0px;
+    padding: 0px 0px;</string>
+                 </property>
+                 <property name="alternatingRowColors">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="2" column="6">
+             <widget class="QComboBox" name="mcu_status_2">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QComboBox{	
+	padding-left:10px;	
+padding-right:10px;
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+}
+QComboBox::drop-down{
+	border:0px
+}
+
+QComboBox::down-arrow {
+	image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+QComboBox:on{
+	border:4px solid #c2dbfe;
+}
+
+QComboBox QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+QComboBox QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>Status</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Good</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>NG</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="2" column="5">
+             <widget class="QComboBox" name="time_frame_2">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#time_frame{	
+	padding-left:10px;	
+padding-right:10px;
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+}
+#time_frame::drop-down{
+	border:0px
+}
+
+#time_frame::down-arrow {
+	image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+#time_frame:on{
+	border:4px solid #c2dbfe;
+}
+
+#time_frame QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+#time_frame QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>Time</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Hour</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Day</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Week</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Month</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Year</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="0" column="0" colspan="10">
+             <widget class="QLabel" name="label_11">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>SCG</family>
+                <pointsize>15</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white;
+background-color:#222222;
+border-radius: 10px;
+padding: 10px 10px;
+margin-right:0px</string>
+              </property>
+              <property name="text">
+               <string>Controller Board Data</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="8">
+             <widget class="QPushButton" name="controller_finder_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>SCG</family>
+                <pointsize>15</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="contextMenuPolicy">
+               <enum>Qt::PreventContextMenu</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	background-color:#06768d;
+    color:white;
+	border: none;
+	border-radius: 5px;
+	padding: 5px 5px;
+}
+
+QPushButton:hover {
+    background-color: #065465; /* Darker Green */
+    border:1px solid #808080;
+}
+
+QPushButton:pressed {
+    background-color: #003747; /* Even Darker Green when pressed */
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../../SCG/04_Code/Assembly/SDE-Inspection/sde.qrc">
+                <normaloff>:/icon/assets/search-9-64.ico</normaloff>:/icon/assets/search-9-64.ico</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="device_id_input_2">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLineEdit{
+	background-color:white;
+	border-radius: 5px;
+  border:1px solid black;
+  padding: 5px 5px;
+}
+QLineEdit:focus{
+	border:4px solid #c2dbfe;
+}
+</string>
+              </property>
+              <property name="maxLength">
+               <number>16</number>
+              </property>
+              <property name="placeholderText">
+               <string>Device ID</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="4">
+             <widget class="QComboBox" name="device_type_2">
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>SCG</family>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="contextMenuPolicy">
+               <enum>Qt::PreventContextMenu</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#device_type{
+	padding-left:10px;	
+padding-right:20px;
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+}
+#device_type::drop-down{
+	border:0px
+}
+
+#device_type::down-arrow {
+	image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+#device_type:on{
+	border:4px solid #c2dbfe;
+}
+
+#device_type QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+#device_type QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>Device Type</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Actuator Controller</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Sensor Controller</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="2" column="7">
+             <widget class="QComboBox" name="boxlot_finder_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>150</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QComboBox{	
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+	padding-left:10px;
+}
+QComboBox::drop-down{
+	border:0px
+}
+
+QComboBox::down-arrow {
+	image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+QComboBox:on{
+	border:4px solid #c2dbfe;
+}
+
+QComboBox QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+QComboBox QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="inspection_config_page_2">
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="1">
+             <widget class="QFrame" name="frame_10">
+              <property name="maximumSize">
+               <size>
+                <width>400</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color:#222222;
+border-radius: 10px;
+padding: 0px 0px;</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <widget class="QLabel" name="insign_status_2">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>20</y>
+                 <width>361</width>
+                 <height>32</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>18</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:white;
+	text-align:center;
+	font-size:18pt;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="export_document_butt">
+               <property name="geometry">
+                <rect>
+                 <x>19</x>
+                 <y>270</y>
+                 <width>361</width>
+                 <height>41</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="contextMenuPolicy">
+                <enum>Qt::PreventContextMenu</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 2px;
+}
+
+QPushButton:hover {
+    background-color: #45a049; /* Darker Green */
+}
+
+QPushButton:pressed {
+    background-color: #357a38; /* Even Darker Green when pressed */
+}</string>
+               </property>
+               <property name="text">
+                <string>Export</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+               <property name="autoRepeat">
+                <bool>false</bool>
+               </property>
+              </widget>
+              <widget class="QComboBox" name="alive_lot_box">
+               <property name="geometry">
+                <rect>
+                 <x>110</x>
+                 <y>200</y>
+                 <width>201</width>
+                 <height>40</height>
+                </rect>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QComboBox{	
+	background-color:white;
+	border-radius: 5px;
+	border:1px solid black;
+	padding-left:10px;
+}
+QComboBox::drop-down{
+	border:0px
+}
+
+QComboBox::down-arrow {
+	image:url(:/newPrefix/assets/arrow-down-sign-to-navigate.png);
+	width:15px;	
+	height:15px;
+	margin-right:15px;
+}
+QComboBox:on{
+	border:4px solid #c2dbfe;
+}
+
+QComboBox QListView{
+	background-color:white;
+	border-radius: 5px;
+}
+
+QComboBox QListView::item{
+	padding-left:10px;
+    border:1px solid rgba(0,0,0,10%);
+	background-color:#fff;
+    outline:0px;
+}
+</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_22">
+               <property name="geometry">
+                <rect>
+                 <x>10</x>
+                 <y>90</y>
+                 <width>381</width>
+                 <height>20</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                 <underline>false</underline>
+                 <strikeout>false</strikeout>
+                 <stylestrategy>PreferDefault</stylestrategy>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:white;
+	text-align:center;</string>
+               </property>
+               <property name="text">
+                <string>______________________________________________________________________</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_35">
+               <property name="geometry">
+                <rect>
+                 <x>20</x>
+                 <y>70</y>
+                 <width>186</width>
+                 <height>32</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>18</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:white;
+	text-align:center;
+	font-size:18pt;</string>
+               </property>
+               <property name="text">
+                <string>Export Result</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="label_37">
+               <property name="geometry">
+                <rect>
+                 <x>30</x>
+                 <y>140</y>
+                 <width>81</width>
+                 <height>41</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:white;
+	text-align:center;
+	font-size:15pt;</string>
+               </property>
+               <property name="text">
+                <string>Lot No.</string>
+               </property>
+              </widget>
+              <widget class="QLineEdit" name="lot_finder">
+               <property name="geometry">
+                <rect>
+                 <x>110</x>
+                 <y>140</y>
+                 <width>201</width>
+                 <height>40</height>
+                </rect>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLineEdit{
+	background-color:white;
+	border-radius: 5px;
+  border:1px solid black;
+  padding: 5px 5px;
+}
+QLineEdit:focus{
+	border:4px solid #c2dbfe;
+}
+</string>
+               </property>
+               <property name="maxLength">
+                <number>13</number>
+               </property>
+               <property name="placeholderText">
+                <string>L-20XXXXXX-XX</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="lot_finder_butto">
+               <property name="geometry">
+                <rect>
+                 <x>320</x>
+                 <y>140</y>
+                 <width>61</width>
+                 <height>41</height>
+                </rect>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>SCG</family>
+                 <pointsize>15</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="contextMenuPolicy">
+                <enum>Qt::PreventContextMenu</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+	background-color:#06768d;
+    color:white;
+	border: none;
+	border-radius: 5px;
+	padding: 5px 5px;
+}
+
+QPushButton:hover {
+    background-color: #065465; /* Darker Green */
+    border:1px solid #808080;
+}
+
+QPushButton:pressed {
+    background-color: #003747; /* Even Darker Green when pressed */
+}</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../SCG/04_Code/Assembly/SDE-Inspection/sde.qrc">
+                 <normaloff>:/icon/assets/search-9-64.ico</normaloff>:/icon/assets/search-9-64.ico</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QFrame" name="frame_9">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color:#d9dadb;
+border-radius: 10px;</string>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_15">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_19">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>SCG</family>
+                   <pointsize>15</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color:white;
+background-color:#222222;
+border-radius: 10px;
+padding: 10px 10px;
+margin-right:0px</string>
+                 </property>
+                 <property name="text">
+                  <string>Export Result</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QTableView" name="incomeTableView_4">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>SCG</family>
+                   <pointsize>15</pointsize>
+                  </font>
+                 </property>
+                 <property name="cursor" stdset="0">
+                  <cursorShape>ArrowCursor</cursorShape>
+                 </property>
+                 <property name="contextMenuPolicy">
+                  <enum>Qt::PreventContextMenu</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">	border:1px solid #1c305c;
+background-color:white;
+    border-radius: 0px;
+    padding: 0px 0px;</string>
+                 </property>
+                 <property name="alternatingRowColors">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_2">
+           <layout class="QGridLayout" name="gridLayout_5"/>
+          </widget>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="insign_status_3">
+          <property name="font">
+           <font>
+            <family>SCG</family>
+            <pointsize>18</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:white;
+	text-align:center;
+	font-size:18pt;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QFrame" name="big_menu">
+      <property name="maximumSize">
+       <size>
+        <width>200</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:	#222222;
+border-radius: 0px;
+padding: 0px 0px;</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="2" column="1">
+        <widget class="QPushButton" name="big_menu_btn">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="whatsThis">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/newPrefix/assets/SDE-Logo-Login_mini.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../SCG/04_Code/Assembly/SDE-Inspection/sde.qrc">
+           <normaloff>:/newPrefix/assets/SDE-Logo-Login_mini.png</normaloff>:/newPrefix/assets/SDE-Logo-Login_mini.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>150</width>
+           <height>150</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="1">
+        <widget class="QPushButton" name="big_db_btn">
+         <property name="font">
+          <font>
+           <family>SCG</family>
+           <pointsize>15</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	text-align:left;
+   color:white;
+	background-color:	#222222;
+	border-radius: 0px;
+	padding: 5px 10px;
+}
+QPushButton:hover {
+    background-color: #f44336; /* Darker Red */
+}
+QPushButton:pressed {
+    background-color: #b71c1c; /* Even Darker Red when pressed */
+}
+</string>
+         </property>
+         <property name="text">
+          <string> Data Base</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../SCG/04_Code/Assembly/SDE-Inspection/sde.qrc">
+           <normaloff>:/icon/assets/document-2-64.ico</normaloff>:/icon/assets/document-2-64.ico</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>25</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QPushButton" name="big_controller_btn">
+         <property name="font">
+          <font>
+           <family>SCG</family>
+           <pointsize>15</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	text-align:left;
+   color:white;
+	background-color:	#222222;
+	border-radius: 0px;
+	padding: 5px 10px;
+}
+QPushButton:hover {
+    background-color: #f44336; /* Darker Red */
+}
+QPushButton:pressed {
+    background-color: #b71c1c; /* Even Darker Red when pressed */
+}
+</string>
+         </property>
+         <property name="text">
+          <string>  Test</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../SCG/04_Code/Assembly/SDE-Inspection/sde.qrc">
+           <normaloff>:/icon/assets/chip-2-64.ico</normaloff>:/icon/assets/chip-2-64.ico</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>25</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="big_insign_bt">
+         <property name="font">
+          <font>
+           <family>SCG</family>
+           <pointsize>15</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	text-align:left;
+   color:white;
+	background-color:	#222222;
+	border-radius: 0px;
+	padding: 5px 10px;
+}
+QPushButton:hover {
+    background-color: #f44336; /* Darker Red */
+}
+QPushButton:pressed {
+    background-color: #b71c1c; /* Even Darker Red when pressed */
+}
+</string>
+         </property>
+         <property name="text">
+          <string>  Setup</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../SCG/04_Code/Assembly/SDE-Inspection/sde.qrc">
+           <normaloff>:/icon/assets/box-3-64.ico</normaloff>:/icon/assets/box-3-64.ico</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>25</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QPushButton" name="big_export_btn">
+         <property name="font">
+          <font>
+           <family>SCG</family>
+           <pointsize>15</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	text-align:left;
+   color:white;
+	background-color:	#222222;
+	border-radius: 0px;
+	padding: 5px 10px;
+}
+QPushButton:hover {
+    background-color: #f44336; /* Darker Red */
+}
+QPushButton:pressed {
+    background-color: #b71c1c; /* Even Darker Red when pressed */
+}
+</string>
+         </property>
+         <property name="text">
+          <string> Export</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../SCG/04_Code/Assembly/SDE-Inspection/sde.qrc">
+           <normaloff>:/icon/assets/box-3-64.ico</normaloff>:/icon/assets/box-3-64.ico</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>25</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../../../SCG/04_Code/Assembly/SDE-Inspection/sde.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>powerOffButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>powerOnButton</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1342</x>
+     <y>176</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1290</x>
+     <y>164</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>powerOnButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>powerOffButton</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1270</x>
+     <y>175</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1286</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>powerOffButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>powerOnButton</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1263</x>
+     <y>174</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1257</x>
+     <y>163</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>powerOffButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>powerOffButton</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1298</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1267</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>powerOnButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>powerOffButton</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1269</x>
+     <y>170</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1325</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>powerOnButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>powerOnButton</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1265</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1297</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

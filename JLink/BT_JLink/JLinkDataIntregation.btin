@@ -1,0 +1,93 @@
+﻿<IntegrationFile Version="10" ID="c01eeb08-4279-4302-93a2-b15ea0801465">
+  <ActionGroup ID="2e36e94c-3559-4e40-b890-19bb99986401" RunMethod="Sequential" MessagingEnabled="false">
+    <Actions>
+      <FileTriggerIntegration Name="macID_BT" IgnoreErrors="true" ID="7b55b9f8-0783-4abf-b18b-505d360eb0f7" MultipleServerScanning="true" Filter="devices.csv" FilterType="RegularExpression" DetectionAction="None" DetectionExtension="done" FailureAction="None" DetectFileChanged="true">
+        <ActionGroup ID="1e27cadc-cd3a-4e84-a52d-6f9dc6a46ad8" RunMethod="Sequential" MessagingEnabled="false">
+          <Actions>
+            <TransformTextToRecordSetAction Name="แปลงข้อความเป็นชุดระเบียน" IgnoreErrors="false" ID="be9339eb-3456-4b47-89ed-205ab030a0f5">
+              <ConnectionInfo>&lt;?xml version="1.0" encoding="utf-8"?&gt;&#xD;
+&lt;DatabaseSetup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;&#xD;
+  &lt;DatabaseConnections&gt;&#xD;
+    &lt;DatabaseConnection Name="@1" Type="TextFile"&gt;codepage=65001;pathname=D:\ES\UART-NEW_UI\LabelGenerator-main\JLink\database\devices.csv;format=CSV;field count=2;first record is header=True&lt;/DatabaseConnection&gt;&#xD;
+  &lt;/DatabaseConnections&gt;&#xD;
+  &lt;RecordSets&gt;&#xD;
+    &lt;RecordSet Name="devices" Connection="@1" Primary="true"&gt;&#xD;
+      &lt;SelectCommand Custom="false"&gt;SELECT * FROM [devices]&lt;/SelectCommand&gt;&#xD;
+      &lt;ProviderParameters&gt;&lt;/ProviderParameters&gt;&#xD;
+      &lt;LastKnownSchema&gt;&#xD;
+        &lt;Field Name="[devices].[devices].[macID]" Type="String" /&gt;&#xD;
+        &lt;Field Name="[devices].[devices].[note]" Type="String" /&gt;&#xD;
+      &lt;/LastKnownSchema&gt;&#xD;
+    &lt;/RecordSet&gt;&#xD;
+  &lt;/RecordSets&gt;&#xD;
+&lt;/DatabaseSetup&gt;</ConnectionInfo>
+              <Text>
+                <Value>%EventData%</Value>
+              </Text>
+            </TransformTextToRecordSetAction>
+            <ForEachDatabaseRecordAction Name="สำหรับแต่ละระเบียนฐานข้อมูล" ID="44392894-23c6-4bcf-91c4-4393758a783d" RunMethod="Sequential" MessagingEnabled="false">
+              <RecordSet.DataTarget>
+                <Value>%EventData%</Value>
+              </RecordSet.DataTarget>
+            </ForEachDatabaseRecordAction>
+            <PrintAction Name="พิมพ์เอกสาร" IgnoreErrors="true" ID="78da08b4-2f1f-4a6c-aeb1-56a46c83d87b" ReturnPrintData="true" ReturnLabelData="true" Printer="PDF" CopiesPerSerialNumber="1" RecordRange="1..." MakeUniqueOutputFile="false" ResendFailedJobs="false">
+              <DocumentFile Path="D:\ES\UART-NEW_UI\LabelGenerator-main\JLink\BT_JLink\SCM.btw">
+                <FileSystem.System />
+              </DocumentFile>
+              <NamedDataSources>
+                <Field Name="MESSENGE">%MESSENGE%</Field>
+                <Field Name="PROJECT">%PROJECT%</Field>
+                <Field Name="PORT">%PORT%</Field>
+              </NamedDataSources>
+              <PrintToFileFolder Path="D:\ES\UART-NEW_UI\LabelGenerator-main\JLink\database\OutputTest">
+                <FileSystem.System />
+              </PrintToFileFolder>
+            </PrintAction>
+          </Actions>
+        </ActionGroup>
+        <ScanFolder Path="D:\ES\UART-NEW_UI\LabelGenerator-main\JLink\database">
+          <FileSystem.System />
+        </ScanFolder>
+      </FileTriggerIntegration>
+    </Actions>
+  </ActionGroup>
+  <Metadata>
+    <Properties>
+      <Properties Name="MostRecentlyUsedVariables" Type="System.String">
+        <Value>EventData;Response;FileNameWithoutExtension</Value>
+      </Properties>
+      <Properties Name="SelectedDeploymentConfiguration" Type="System.String">
+        <Value>กำหนดเอง</Value>
+      </Properties>
+      <Properties Name="SelectedIntegration" Type="System.Int32">
+        <Value>0</Value>
+      </Properties>
+      <Properties Name="SelectedOptionsPage" Type="System.String">
+        <Value>1;2</Value>
+      </Properties>
+    </Properties>
+  </Metadata>
+  <SourcePath>D:\ES\UART-NEW_UI\LabelGenerator-main\JLink\BT_JLink\JLinkDataIntregation.btin</SourcePath>
+  <IsPrinting>false</IsPrinting>
+  <IsPrintPreview>false</IsPrintPreview>
+  <DeploymentConfigurations>
+    <DeploymentConfiguration CancelIfIntegrationFileExistsOnTargetServer="false">
+      <Name>ทดสอบ</Name>
+      <TargetServers>
+        <TargetServer Name="This Computer" IsServerGroup="false" />
+      </TargetServers>
+      <DeploymentSchedule Method="Immediately">
+        <Schedule StartTime="2023-08-12T00:00:00" />
+      </DeploymentSchedule>
+    </DeploymentConfiguration>
+    <DeploymentConfiguration CancelIfIntegrationFileExistsOnTargetServer="false">
+      <Name>การผลิต</Name>
+      <TargetServers>
+        <TargetServer Name="This Computer" IsServerGroup="false" />
+      </TargetServers>
+      <DeploymentSchedule Method="OnSpecifiedDate">
+        <Schedule StartTime="2023-08-12T00:00:00" />
+      </DeploymentSchedule>
+    </DeploymentConfiguration>
+  </DeploymentConfigurations>
+</IntegrationFile>

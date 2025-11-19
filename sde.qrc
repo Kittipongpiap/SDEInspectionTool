@@ -1,0 +1,49 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>assets/re_logo150.png</file>
+    <file>assets/SDE-Logo-og11.png</file>
+    <file>assets/SDE-Logo-Login100.png</file>
+    <file>assets/SDE-Logo-Login_mini.png</file>
+    <file>assets/y-user-3-64 (1).ico</file>
+    <file>assets/y-integrated-circuit-64 (1).ico</file>
+    <file>assets/SDE-Logo-Login.png</file>
+  </qresource>
+  <qresource>
+    <file>sde.qrc</file>
+  </qresource>
+  <qresource prefix="icon">
+    <file>assets/printer-64 (1).ico</file>
+    <file>assets/delete-property-64 (2).ico</file>
+    <file>assets/box-3-64.ico</file>
+    <file>assets/emoticon-54-64.ico</file>
+    <file>assets/search-9-64.ico</file>
+    <file>assets/define-location-64.ico</file>
+    <file>assets/eye-2-64.ico</file>
+    <file>assets/heart-monitor-64.ico</file>
+    <file>assets/arrow-112-64.ico</file>
+    <file>assets/delete-64.ico</file>
+    <file>assets/erase-64.ico</file>
+    <file>assets/x-mark-3-64 (2).ico</file>
+    <file>assets/x-mark-3-64 (1).ico</file>
+    <file>assets/search-3-64.ico</file>
+    <file>assets/plus-64.ico</file>
+    <file>assets/plus-2-64.ico</file>
+    <file>assets/download-2-64.ico</file>
+    <file>assets/printer-64.ico</file>
+    <file>assets/delete-property-64 (1).ico</file>
+    <file>assets/delete-property-64.ico</file>
+    <file>assets/x-mark-3-64.ico</file>
+    <file>assets/minus-64.ico</file>
+    <file>assets/square-outline-64.ico</file>
+    <file>assets/x-mark-64.ico</file>
+    <file>assets/menu-4-64.ico</file>
+    <file>assets/document-2-64.ico</file>
+    <file>assets/user-3-64.ico</file>
+    <file>assets/window-command.ico</file>
+    <file>assets/integrated-circuit-64.ico</file>
+  </qresource>
+  <qresource prefix="newPrefix">
+    <file>assets/arrow-37-64.ico</file>
+    <file>assets/arrow-down-sign-to-navigate.png</file>
+  </qresource>
+</RCC>
