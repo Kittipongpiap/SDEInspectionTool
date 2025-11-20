@@ -2,7 +2,7 @@ import os
 import threading
 import JLink.jlink as jlink
 import JLink.log as log
-from PyQt5.QtGui import QStandardItemModel, QStandardItem, QBrush, QColor,QFont
+from PyQt6.QtGui import QStandardItemModel, QStandardItem, QBrush, QColor,QFont
 from utils import *
 from utils import get_logger
 import JLink.serialReader as srr
@@ -10,7 +10,7 @@ import JLink.db_controller as db_controller
 import JLink.ui_manager  as UIM
 import JLink.db_controller as db_controller
 import JLink.limitter as pop_up
-from PyQt5.QtCore import QObject, pyqtSignal, Qt
+from PyQt6.QtCore import QObject, pyqtSignal, Qt
 
 mac_id_list = []
 mcu_data_list = []
@@ -28,9 +28,9 @@ class UIThreadHelper(QObject):
     def __init__(self):
         super().__init__()
         # Connect with queued connections into the GUI thread
-        self.set_status_signal.connect(self._set_status, Qt.UniqueConnection)
-        self.run_error_signal.connect(self._run_error, Qt.UniqueConnection)
-        self.add_good_signal.connect(self._add_good, Qt.UniqueConnection)
+        self.set_status_signal.connect(self._set_status)
+        self.run_error_signal.connect(self._run_error)
+        self.add_good_signal.connect(self._add_good)
 
     def _set_status(self, ui, text):
         try:

@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 from ui import Ui_MainWindow
 import sys
 import JLink.ui_manager as page
@@ -26,4 +26,4 @@ if __name__ == "__main__":
     sensor_range.range_on_display(ui)
     #page.list_com_ports()
     MainWindow.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

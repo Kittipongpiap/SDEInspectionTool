@@ -5,7 +5,7 @@
 
 from sqlite_dbcon import db_connect
 from utils import *
-from PyQt5.QtGui import QStandardItemModel, QStandardItem
+from PyQt6.QtGui import QStandardItemModel, QStandardItem
 
 '''
 SELECT * FROM db_sde.devices_income
