@@ -6,7 +6,6 @@
 # Actuator can fix current tororent value 
 # Sensor Controller Should be read form master board 
 
-import serial
 import struct
 from utils import *
 import threading
@@ -15,9 +14,10 @@ import JLink.ui_function as uif
 import JLink.db_controller as db_mcu
 import JLink.limitter as comperator
 import time
-import pylink
-from PyQt5.QtCore import QObject, pyqtSignal, QThread, QMetaObject, Qt
-from PyQt5.QtGui import QTextCursor
+from pylink.jlink import JLink
+import pylink.enums
+from PyQt6.QtCore import QObject, pyqtSignal, QThread, QMetaObject, Qt
+from PyQt6.QtGui import QTextCursor
 from utils import get_logger
 
 logger = get_logger(__name__)
@@ -30,8 +30,8 @@ class MainThreadHelper(QObject):
     
     def __init__(self):
         super().__init__()
-        # Use Qt.UniqueConnection to prevent duplicate connections if module reloads
-        self.process_complete.connect(self._handle_process_complete, Qt.UniqueConnection)
+        # Connect signal without UniqueConnection for PyQt6 compatibility
+        self.process_complete.connect(self._handle_process_complete)
     
     def _handle_process_complete(self, ui, mac_id, controller_type, first_stack, second_stack):
         """Runs in main thread via queued connection"""
@@ -52,7 +52,7 @@ class MainThreadHelper(QObject):
 _main_thread_helper = MainThreadHelper()
 
 
-def _target_connect_and_verify(link: pylink.JLink, device: str, speed: int = 4000, retries: int = 5, wait_s: float = 0.5, speed_fallbacks=None) -> bool:
+def _target_connect_and_verify(link: JLink, device: str, speed: int = 4000, retries: int = 5, wait_s: float = 0.5, speed_fallbacks=None) -> bool:
     """Connect to target over SWD and verify by reading CPUID.
 
     Tries the given speed and optional fallback speeds. Returns True when
@@ -180,7 +180,7 @@ def ReadSerial_Controller(ui, mac_id=None):
 
     logger.info("Connecting to target via SWD...")
     # Create a local J-Link instance for this thread
-    link = pylink.JLink()
+    link = JLink()
     # Optional power on pulse via J-Link commander (best-effort)
     try:
         jlink.power_on()
@@ -236,7 +236,7 @@ def ReadSerial_Controller(ui, mac_id=None):
             num_up_bufs = link.rtt_get_num_up_buffers()
             if num_up_bufs > 0:
                 break
-        except pylink.JLinkRTTException:
+        except Exception:
             pass
         time.sleep(0.1)
     else:
@@ -329,7 +329,7 @@ def ReadSerial_Controller(ui, mac_id=None):
                     end_process_(ui, mac_id, device_type, act_stack, curr_stack)
                     processing_complete = True
                     break
-    except pylink.JLinkRTTException as e:
+    except Exception as e:
         logger.exception("Error opening or reading serial port: %s", e)
         if link.connected():
             link.close()
@@ -369,7 +369,7 @@ class SerialReader(QObject):
     def __init__(self, port, baud_rate):
         DEVICE = 'nRF52840_xxAA'
         super().__init__()
-        self.jlink = pylink.JLink()
+        self.jlink = JLink()
     
         self.jlink.open()
         if not self.jlink.connected():
@@ -390,7 +390,7 @@ class SerialReader(QObject):
                 num_up_bufs = self.jlink.rtt_get_num_up_buffers()
                 if num_up_bufs > 0:
                     break
-            except pylink.JLinkRTTException:
+            except Exception:
                 pass
             time.sleep(0.1)
         else:

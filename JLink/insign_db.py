@@ -1,11 +1,11 @@
-from PyQt5.QtGui import QStandardItemModel, QStandardItem
+from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from sqlite_dbcon import db_connect
 from utils import *
 
 #================================================================================================================================================================
 def incoming_device(ui):
     lot_no = ui.incom_date.text()
-    lot_id_box(ui)
+    
     # device_qt  = ui.income_qt.text()
     lot_db_table = "db_sde.devices_income_lot"
     lot_condition = "lot_no = '"+lot_no+"'"
@@ -14,12 +14,16 @@ def incoming_device(ui):
     check_lot = db_connect()
     results = check_lot.connect_select(lot_db_table, lot_condition, lot_field)
     for lot_list in results:
-        print(lot_list[0])
+        # print(lot_list[0])
         lot_invalid.append(lot_list[0])
+    print("len of lot_invalid and lot_no")
+    print(len(lot_invalid))
+    print(len(lot_no))
     
     # duplicated lot name
     if len(lot_no) >= 4 and len(lot_invalid) == 0  :
         #new lot
+        print("=================================> New Lot Added ")
         null_space = '0'
         # ADD Data =======================================================================================================
         # Use DB-friendly datetime (space between date and time)
@@ -34,19 +38,20 @@ def incoming_device(ui):
         # Clear Input ====================================================================================================
         ui.incom_date.clear()
     elif len(lot_no) == 0  :
-        print("------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+        print("------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>1")
         ui.insign_status.setText(
             "<span style=\"color:WHITE\">Status : </span></p><span style=\"color:RED\">Invalid Data</span></p>")
         #ui.income_qt.clear()
         ui.incom_date.clear()
     elif len(lot_invalid) != 0  :
-        print("------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+        print("------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>2")
         ui.insign_status.setText(
             "<span style=\"color:WHITE\">Status : </span></p><span style=\"color:RED\">Error Duplicated Lot No.</span></p>")
         #ui.income_qt.clear()
         ui.incom_date.clear()
-    ui.lot_finder.setText(lot_no)
     incoming_list(ui,0)
+    ui.lot_finder.setText(lot_no)
+    lot_id_box(ui)
 
 def incoming_list(ui,status) :
     if status == 0 :
@@ -84,12 +89,6 @@ def incoming_list(ui,status) :
         TableData(ui.incomeTableView_2, columnHeaders, issue_array)
     if status == 1 : 
         TableData(ui.incomeTableView_4, columnHeaders, issue_array)
-    # Keep the UI search input cleared after listing to avoid stale values
-    try:
-        if hasattr(ui, 'lot_finder'):
-            ui.lot_finder.clear()
-    except Exception:
-        pass
 
 def lot_id_box(ui) :
     f_select = "lot_no"
