@@ -1,20 +1,47 @@
 import mysql.connector
 from mysql.connector import Error
+import json
+import os
 from utils import get_logger
 
 logger = get_logger(__name__)
 
 class db_connect:
     def __init__(self):
-        try:
-            # Adjust for your environment (Mac / Office / Test)
-            self.conn_db = mysql.connector.connect(
-                host="localhost",
-                database="db_sde",
-                user="admin",
-                password="Banana-Pi00"
+        # Load database configuration from JSON file with env override and fallback
+        base_dir = os.path.dirname(__file__)
+        env_cfg_path = os.getenv('DB_CONFIG_PATH')
+        default_cfg_path = os.path.join(base_dir, 'db_config.json')
+
+        config_path = env_cfg_path if env_cfg_path else default_cfg_path
+
+        if not os.path.exists(config_path):
+
+            raise FileNotFoundError(
+                f"Database config not found. Looked for '{config_path}'."
             )
 
+        with open(config_path, 'r', encoding='utf-8') as f:
+            cfg = json.load(f)
+
+        host = cfg.get('host')
+        database = cfg.get('database')
+        user = cfg.get('user')
+        password = cfg.get('password')
+        port = cfg.get('port')  # optional
+
+        if not all([host, database, user, password]):
+            raise ValueError("db_config is missing required keys: host, database, user, password")
+
+
+        connect_kwargs = dict(host=host, database=database, user=user, password=password)
+        if port:
+            connect_kwargs['port'] = port
+
+        self.conn_db = mysql.connector.connect(**connect_kwargs)
+
+
+        try:
             if self.conn_db.is_connected():
                 logger.info("Database connected successfully")
             else:
@@ -91,7 +118,6 @@ class db_connect:
         if not hasattr(self, "conn_db") or not self.conn_db.is_connected():
             logger.error("No active DB connection for UPDATE query")
             return 0
-
         try:
             cursor = self.conn_db.cursor()
             query = f"UPDATE {table} SET {values}"

@@ -1,0 +1,7 @@
+{
+  "host": "localhost",
+  "database": "db_sde",
+  "user": "admin",
+  "password": "Banana-Pi00",
+  "port": 3306
+}
