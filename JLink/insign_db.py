@@ -1,4 +1,4 @@
-from PyQt6.QtGui import QStandardItemModel, QStandardItem
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from sqlite_dbcon import db_connect
 from utils import *
 

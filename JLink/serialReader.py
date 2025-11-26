@@ -16,8 +16,8 @@ import JLink.limitter as comperator
 import time
 from pylink.jlink import JLink
 import pylink.enums
-from PyQt6.QtCore import QObject, pyqtSignal, QThread, QMetaObject, Qt
-from PyQt6.QtGui import QTextCursor
+from PyQt5.QtCore import QObject, pyqtSignal, QThread, QMetaObject, Qt
+from PyQt5.QtGui import QTextCursor
 from utils import get_logger
 
 logger = get_logger(__name__)

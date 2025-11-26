@@ -1,4 +1,4 @@
-from PyQt6 import QtWidgets
+from PyQt5 import QtWidgets
 from ui import Ui_MainWindow
 import sys
 import JLink.ui_manager as page
