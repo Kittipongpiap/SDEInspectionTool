@@ -3,10 +3,10 @@ import serial.tools.list_ports
 import JLink.serialReader as srr
 import JLink.insign_db as insign_db 
 from JLink.controller_data import *
-from PyQt6.QtGui import QIntValidator
+from PyQt5.QtGui import QIntValidator
 from JLink.limitter import *
 import media_generator as media_gen
-from PyQt6.QtWidgets import QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
 def set_lineedit_int_only(line_edit):
     validator = QIntValidator()

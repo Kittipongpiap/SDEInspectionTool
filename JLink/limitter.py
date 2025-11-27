@@ -1,13 +1,13 @@
 from sqlite_dbcon import db_connect
-from PyQt6.QtGui import QStandardItemModel, QStandardItem
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
 import JLink.ui_function as uif
 import JLink.db_controller as db_mcu
 import JLink.insign_db as insgin_db
 from utils import *
 from utils import get_logger
-from PyQt6.QtWidgets import QMessageBox,QDialog, QLabel, QVBoxLayout, QPushButton
-from PyQt6.QtCore import pyqtSignal, QObject ,Qt
-from PyQt6.QtGui import QFont
+from PyQt5.QtWidgets import QMessageBox,QDialog, QLabel, QVBoxLayout, QPushButton
+from PyQt5.QtCore import pyqtSignal, QObject ,Qt
+from PyQt5.QtGui import QFont
 dt_string = get_date_time()
 import JLink.log
 
@@ -60,9 +60,9 @@ def TableData(tableView, columnHeaders, data):
     tableView.resizeColumnsToContents()
 
 # Sensor Coperator ====================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
-from PyQt6.QtCore import pyqtSignal, QObject
-from PyQt6.QtGui import QFont
-from PyQt6.QtWidgets import QDialog, QLabel, QVBoxLayout, QPushButton
+from PyQt5.QtCore import pyqtSignal, QObject
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QDialog, QLabel, QVBoxLayout, QPushButton
 
 class CustomAlertDialog(QDialog):
     def __init__(self, message, parent=None):

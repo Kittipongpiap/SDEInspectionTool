@@ -2,7 +2,7 @@ import os
 import threading
 import JLink.jlink as jlink
 import JLink.log as log
-from PyQt6.QtGui import QStandardItemModel, QStandardItem, QBrush, QColor,QFont
+from PyQt5.QtGui import QStandardItemModel, QStandardItem, QBrush, QColor,QFont
 from utils import *
 from utils import get_logger
 import JLink.serialReader as srr
@@ -10,7 +10,7 @@ import JLink.db_controller as db_controller
 import JLink.ui_manager  as UIM
 import JLink.db_controller as db_controller
 import JLink.limitter as pop_up
-from PyQt6.QtCore import QObject, pyqtSignal, Qt
+from PyQt5.QtCore import QObject, pyqtSignal, Qt
 
 mac_id_list = []
 mcu_data_list = []
