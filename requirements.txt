@@ -1,5 +1,5 @@
 python<=3.12.5
-PyQt5<=5.15.9
+PyQt5>=5.15.11
 pyserial>=3.5
 qrcode>=7.3
 Pillow>=9.0.0
